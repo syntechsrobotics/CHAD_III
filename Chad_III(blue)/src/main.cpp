@@ -39,10 +39,10 @@ void autonomous(void) {
     frontLeft.rotateFor(-2, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
     backLeft.rotateFor(-2, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, true);
   //Turn
-    frontRight.rotateFor(0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-    backRight.rotateFor(0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-    frontLeft.rotateFor(-0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-    backLeft.rotateFor(-0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
+    frontRight.rotateFor(-0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    backRight.rotateFor(-0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
 
   //Unfolds Arms
   //Forwards
