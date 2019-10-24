@@ -18,7 +18,6 @@
 // ramp                 motor         20              
 // rightClaw            motor         3               
 // leftClaw             motor         15              
-// arms                 motor         6               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
@@ -27,6 +26,7 @@ using namespace vex;
 
 void autonomous(void) {
 
+  /*
   //Push Cube into Goal
   //Forwards
     frontRight.rotateFor(2, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
@@ -69,6 +69,7 @@ void autonomous(void) {
     leftClaw.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
     rightClaw.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
     vex::task::sleep(1000);
+  */
 
 }
 
@@ -89,10 +90,17 @@ void usercontrol(void) {
   int sigmoid_map[255] = {-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -99, -99, -99, -99, -99, -99, -99, -99, -99, -99, -99, -99, -99, -99, -99, -99, -99, -99, -99, -99, -99, -98, -98, -98, -98, -98, -98, -97, -97, -97, -96, -96, -96, -95, -95, -94, -94, -93, -92, -92, -91, -90, -89, -88, -86, -85, -84, -82, -80, -79, -77, -75, -73, -70, -68, -66, -63, -61, -58, -55, -52, -50, -47, -44, -41, -39, -36, -34, -31, -29, -27, -24, -22, -21, -19, -17, -16, -14, -13, -12, -10, -9, -8, -8, -7, -6, -5, -5, -4, -4, -3, -3, -3, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6, 7, 8, 8, 9, 10, 12, 13, 14, 16, 17, 19, 21, 22, 24, 27, 29, 31, 34, 36, 39, 41, 44, 47, 50, 52, 55, 58, 61, 63, 66, 68, 70, 73, 75, 77, 79, 80, 82, 84, 85, 86, 88, 89, 90, 91, 92, 92, 93, 94, 94, 95, 95, 96, 96, 96, 97, 97, 97, 98, 98, 98, 98, 98, 98, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 99, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100};
   int leftPower, rightPower;
 
-  //Tank Control
+  
+  /*//Tank Control
   leftPower = sigmoid_map[Controller1.Axis3.value() + 127];
   rightPower = sigmoid_map[Controller1.Axis2.value() + 127];
-  
+  */
+
+  //Arcade control
+  leftPower = sigmoid_map[Controller1.Axis3.value() + 127] + sigmoid_map[Controller1.Axis4.value() + 127];
+  rightPower = sigmoid_map[Controller1.Axis3.value() + 127] - sigmoid_map[Controller1.Axis4.value() + 127];
+
+
   //Percussion Control
   if (Controller1.ButtonL1.pressing()){
     leftPower /= 2;
@@ -111,22 +119,6 @@ void usercontrol(void) {
     //Move Straight Down
     frontRight.spin(vex::directionType::rev, 100, vex::velocityUnits::pct);
     backRight.spin(vex::directionType::rev, 100, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonLeft.pressing() && Controller1.ButtonL1.pressing()) {
-    //Turn Left Slowly
-    frontRight.spin(vex::directionType::fwd, 25, vex::velocityUnits::pct);
-    backRight.spin(vex::directionType::fwd, 25, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonLeft.pressing()) {
-    //Turn Left
-    frontRight.spin(vex::directionType::fwd, 50, vex::velocityUnits::pct);
-    backRight.spin(vex::directionType::fwd, 50, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonRight.pressing() && Controller1.ButtonL1.pressing()) {
-    //Turn Right Slowly
-    frontRight.spin(vex::directionType::rev, 25, vex::velocityUnits::pct);
-    backRight.spin(vex::directionType::rev, 25, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonRight.pressing()) {
-    //Turn Right
-    frontRight.spin(vex::directionType::rev, 50, vex::velocityUnits::pct);
-    backRight.spin(vex::directionType::rev, 50, vex::velocityUnits::pct);
   } else {
     //Stop
     frontRight.stop(vex::brakeType::brake);
@@ -142,31 +134,26 @@ void usercontrol(void) {
     //Move Up
     frontLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
     backLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonDown.pressing()){\
+  } else if (Controller1.ButtonDown.pressing()){
     //Move Down
     frontLeft.spin(vex::directionType::rev, 100, vex::velocityUnits::pct);
     backLeft.spin(vex::directionType::rev, 100, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonLeft.pressing() && Controller1.ButtonL1.pressing()) {
-    //Turn Left Slowly
-    frontLeft.spin(vex::directionType::rev, 25, vex::velocityUnits::pct);
-    backLeft.spin(vex::directionType::rev, 25, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonLeft.pressing()) {
-    //Turn Left
-    frontLeft.spin(vex::directionType::rev, 50, vex::velocityUnits::pct);
-    backLeft.spin(vex::directionType::rev, 50, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonRight.pressing() && Controller1.ButtonL1.pressing()) {
-    //Turn Right Slowly
-    frontLeft.spin(vex::directionType::fwd, 25, vex::velocityUnits::pct);
-    backLeft.spin(vex::directionType::fwd, 25, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonRight.pressing()) {
-    //Turn Right
-    frontLeft.spin(vex::directionType::fwd, 50, vex::velocityUnits::pct);
-    backLeft.spin(vex::directionType::fwd, 50, vex::velocityUnits::pct);
   } else {
     //Stop
     frontLeft.stop(vex::brakeType::brake);
     backLeft.stop(vex::brakeType::brake);
   }
+
+  //Strafing
+  if (Controller1.ButtonRight.pressing()) {
+    frontLeft.spin(vex::directionType::rev, 100, vex::velocityUnits::pct);
+    backRight.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+  } else if (Controller1.ButtonLeft.pressing()) {
+    frontRight.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+    backLeft.spin(vex::directionType::rev, 100, vex::velocityUnits::pct);
+  }
+
+
 
   //Ramp movement
   if (Controller1.ButtonX.pressing()) {
@@ -199,7 +186,7 @@ int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
-  autonomous();
+  //autonomous();
   usercontrol();
 
   for(;;) {
