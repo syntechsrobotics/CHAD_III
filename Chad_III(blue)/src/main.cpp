@@ -91,15 +91,16 @@ void usercontrol(void) {
   int leftPower, rightPower;
 
   
-  /*//Tank Control
+  //Tank Control
   leftPower = sigmoid_map[Controller1.Axis3.value() + 127];
   rightPower = sigmoid_map[Controller1.Axis2.value() + 127];
-  */
+  
 
-  //Arcade control
+  /*//Arcade control
   leftPower = sigmoid_map[Controller1.Axis3.value() + 127] + sigmoid_map[Controller1.Axis4.value() + 127];
   rightPower = sigmoid_map[Controller1.Axis3.value() + 127] - sigmoid_map[Controller1.Axis4.value() + 127];
-
+  */
+  
 
   //Percussion Control
   if (Controller1.ButtonL1.pressing()){
