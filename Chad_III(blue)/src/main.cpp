@@ -15,9 +15,10 @@
 // frontLeft            motor         9               
 // backRight            motor         18              
 // backLeft             motor         11              
-// ramp                 motor         20              
 // rightClaw            motor         3               
 // leftClaw             motor         15              
+// ramp                 motor         6               
+// ramp2                motor         4               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
@@ -159,10 +160,13 @@ void usercontrol(void) {
   //Ramp movement
   if (Controller1.ButtonX.pressing()) {
     ramp.spin(vex::directionType::fwd, 50, vex::velocityUnits::pct);
+    ramp2.spin(vex::directionType::fwd, 10, vex::velocityUnits::pct);
   } else if (Controller1.ButtonA.pressing()) {
     ramp.spin(vex::directionType::rev, 50, vex::velocityUnits::pct);
+    ramp2.spin(vex::directionType::rev, 10, vex::velocityUnits::pct);
   } else {
     ramp.stop(vex::brakeType::hold);
+    ramp2.stop(vex::brakeType::hold);
   }
 
   //Claw control
@@ -187,7 +191,7 @@ int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
-  //autonomous();
+  autonomous();
   usercontrol();
 
   for(;;) {

@@ -11,6 +11,7 @@ extern motor backLeft;
 extern motor ramp;
 extern motor rightClaw;
 extern motor leftClaw;
+extern motor ramp2;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Text.
