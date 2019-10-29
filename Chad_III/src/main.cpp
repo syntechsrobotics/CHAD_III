@@ -17,7 +17,7 @@
 // backLeft             motor         11              
 // ramp                 motor         6               
 // rightClaw            motor         3               
-// leftClaw             motor         15              
+// leftClaw             motor         1               
 // ramp2                motor         4               
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
