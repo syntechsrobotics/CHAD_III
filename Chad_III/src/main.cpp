@@ -11,14 +11,14 @@
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
 // Controller1          controller                    
-// frontRight           motor         5               
-// frontLeft            motor         9               
-// backRight            motor         18              
-// backLeft             motor         11              
-// ramp                 motor         6               
+// frontRight           motor         11              
+// frontLeft            motor         10              
+// backRight            motor         1               
+// backLeft             motor         9               
+// ramp                 motor         20              
 // rightClaw            motor         3               
-// leftClaw             motor         1               
-// ramp2                motor         4               
+// leftClaw             motor         2               
+// ramp2                motor         19              
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
@@ -142,6 +142,8 @@ void usercontrol(void) {
       100,  100,  100};
   int leftPower, rightPower;
 
+for(;;) {
+
   // Tank Control
   // leftPower = sigmoid_map[Controller1.Axis3.value() + 127];
   // rightPower = sigmoid_map[Controller1.Axis2.value() + 127];
@@ -160,16 +162,16 @@ void usercontrol(void) {
 
   //Strafing
   if (Controller1.ButtonRight.pressing() && Controller1.ButtonL1.pressing()) {
-    frontLeft.spin(vex::directionType::rev, 50, vex::velocityUnits::pct);
+    frontLeft.spin(vex::directionType::fwd, 50, vex::velocityUnits::pct);
     backRight.spin(vex::directionType::fwd, 50, vex::velocityUnits::pct);
   } else if (Controller1.ButtonLeft.pressing() && Controller1.ButtonL1.pressing()) {
-    frontRight.spin(vex::directionType::fwd, 50, vex::velocityUnits::pct);
+    frontRight.spin(vex::directionType::rev, 50, vex::velocityUnits::pct);
     backLeft.spin(vex::directionType::rev, 50, vex::velocityUnits::pct);
   } else if (Controller1.ButtonRight.pressing()) {
-    frontLeft.spin(vex::directionType::rev, 100, vex::velocityUnits::pct);
+    frontLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
     backRight.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
   } else if (Controller1.ButtonLeft.pressing()) {
-    frontRight.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+    frontRight.spin(vex::directionType::rev, 100, vex::velocityUnits::pct);
     backLeft.spin(vex::directionType::rev, 100, vex::velocityUnits::pct);
   }
 
@@ -211,15 +213,25 @@ void usercontrol(void) {
   }
 
 
-  
-
   // Ramp movement
-  if (Controller1.ButtonX.pressing()) {
-    ramp.spin(vex::directionType::fwd, 50, vex::velocityUnits::pct);
-    ramp2.spin(vex::directionType::fwd, 10, vex::velocityUnits::pct);
+  if (Controller1.ButtonX.pressing() && ramp.position(degrees) >= 250) {
+    ramp.stop(vex::brakeType::hold);
+    ramp2.stop(vex::brakeType::hold);
+  } else if (Controller1.ButtonA.pressing() && ramp.position(degrees) <= 0) {
+    ramp.stop(vex::brakeType::hold);
+    ramp2.stop(vex::brakeType::hold);
+  } else if (Controller1.ButtonX.pressing() && Controller1.ButtonL1.pressing()) {
+    ramp.spin(vex::directionType::fwd, 25, vex::velocityUnits::pct);
+    ramp2.spin(vex::directionType::fwd, 25, vex::velocityUnits::pct);
+  } else if (Controller1.ButtonA.pressing() && Controller1.ButtonL1.pressing()) {
+    ramp.spin(vex::directionType::rev, 25, vex::velocityUnits::pct);
+    ramp2.spin(vex::directionType::rev, 25, vex::velocityUnits::pct);
+  } else if (Controller1.ButtonX.pressing()) {
+    ramp.spin(vex::directionType::fwd, 75, vex::velocityUnits::pct);
+    ramp2.spin(vex::directionType::fwd, 75, vex::velocityUnits::pct);
   } else if (Controller1.ButtonA.pressing()) {
-    ramp.spin(vex::directionType::rev, 50, vex::velocityUnits::pct);
-    ramp2.spin(vex::directionType::rev, 10, vex::velocityUnits::pct);
+    ramp.spin(vex::directionType::rev, 75, vex::velocityUnits::pct);
+    ramp2.spin(vex::directionType::rev, 75, vex::velocityUnits::pct);
   } else {
     ramp.stop(vex::brakeType::hold);
     ramp2.stop(vex::brakeType::hold);
@@ -237,17 +249,15 @@ void usercontrol(void) {
     rightClaw.stop(vex::brakeType::hold);
   }
 
-  vex::task::sleep(20);
+  vex::task::sleep(200);
+}
 }
 
 int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
-  autonomous();
+  //autonomous();
   usercontrol();
 
-  for (;;) {
-    vex::task::sleep(100);
-  }
 }
