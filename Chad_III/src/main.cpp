@@ -11,14 +11,14 @@
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
 // Controller1          controller                    
-// frontRight           motor         7               
-// frontLeft            motor         4               
+// frontRight           motor         16             
+// frontLeft            motor         15              
 // backRight            motor         17              
 // backLeft             motor         11              
-// ramp                 motor         12              
+// ramp                 motor         20             
 // rightClaw            motor         18              
 // leftClaw             motor         13              
-// ramp2                motor         20              
+// ramp2                motor         12              
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
