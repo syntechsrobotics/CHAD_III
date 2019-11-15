@@ -30,64 +30,62 @@ vex::competition Competition;
 void auton(void) {
 
   //Unfold & pick up 4 long row of cubes
-  ramp.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  ramp2.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
+  leftClaw.rotateFor(1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  rightClaw.rotateFor(1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
+  ramp.rotateFor(0.5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  ramp2.rotateFor(0.5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
   leftClaw.rotateFor(5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
   rightClaw.rotateFor(5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  frontRight.rotateFor(5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backRight.rotateFor(5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  frontLeft.rotateFor(5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backLeft.rotateFor(5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
+  frontRight.rotateFor(5, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, false);
+  backRight.rotateFor(5, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, false);
+  frontLeft.rotateFor(5, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, false);
+  backLeft.rotateFor(5, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, true);
 
   vex::task::sleep(500);
 
   //Pivot
-  frontRight.rotateFor(3, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backRight.rotateFor(3, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  frontLeft.rotateFor(1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backLeft.rotateFor(1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
+  frontRight.rotateFor(1.6, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  backRight.rotateFor(1.6, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  frontLeft.rotateFor(-1.6, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  backLeft.rotateFor(-1.6, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
 
   vex::task::sleep(500);
 
-  //Pick up 3 long row of cubes
-  leftClaw.rotateFor(7, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  rightClaw.rotateFor(7, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  frontRight.rotateFor(7, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backRight.rotateFor(7, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  frontLeft.rotateFor(7, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backLeft.rotateFor(7, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
+  //go backwards 
+  frontRight.rotateFor(5, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, false);
+  backRight.rotateFor(5, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, false);
+  frontLeft.rotateFor(5, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, false);
+  backLeft.rotateFor(5, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, true);
 
-  vex::task::sleep(500);
+  // // Turn towards scoring zone
+  // frontRight.rotateFor(0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  // backRight.rotateFor(0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  // frontLeft.rotateFor(-0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  // backLeft.rotateFor(-0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
 
-  // Turn towards scoring zone
-  frontRight.rotateFor(0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backRight.rotateFor(0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  frontLeft.rotateFor(-0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backLeft.rotateFor(-0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
+  // vex::task::sleep(500);
 
-  vex::task::sleep(500);
+  // //Move towards goal
+  // frontRight.rotateFor(3, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  // backRight.rotateFor(3, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  // frontLeft.rotateFor(3, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  // backLeft.rotateFor(3, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
 
-  //Move towards goal
-  frontRight.rotateFor(3, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backRight.rotateFor(3, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  frontLeft.rotateFor(3, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backLeft.rotateFor(3, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
+  // vex::task::sleep(500);
 
-  vex::task::sleep(500);
+  // //Move ramp forwards
+  // ramp.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  // ramp2.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
 
-  //Move ramp forwards
-  ramp.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  ramp2.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
+  // vex::task::sleep(500);
 
-  vex::task::sleep(500);
-
-  //do things
-  leftClaw.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  rightClaw.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  frontRight.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backRight.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  frontLeft.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backLeft.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
+  // //do things
+  // leftClaw.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  // rightClaw.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  // frontRight.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  // backRight.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  // frontLeft.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  // backLeft.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
 
   vex::task::sleep(2000);
 }
