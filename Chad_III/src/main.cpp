@@ -11,14 +11,14 @@
 // Robot Configuration:
 // [Name]               [Type]        [Port(s)]
 // Controller1          controller                    
-// frontRight           motor         11              
-// frontLeft            motor         10              
-// backRight            motor         1               
-// backLeft             motor         9               
-// ramp                 motor         20              
-// rightClaw            motor         3               
-// leftClaw             motor         2               
-// ramp2                motor         19              
+// frontRight           motor         7               
+// frontLeft            motor         4               
+// backRight            motor         17              
+// backLeft             motor         11              
+// ramp                 motor         12              
+// rightClaw            motor         18              
+// leftClaw             motor         13              
+// ramp2                motor         20              
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
@@ -27,19 +27,7 @@ using namespace vex;
 
 void autonomous(void) {
 
-  //Unfold
-  frontRight.rotateFor(1, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-  backRight.rotateFor(1, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-  frontLeft.rotateFor(1, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-  backLeft.rotateFor(1, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-  ramp.rotateFor(-1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  ramp2.rotateFor(-1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  leftClaw.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  rightClaw.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
-
-  vex::task::sleep(500);
-
-  //Pick up 4 long row of cubes
+  //Unfold & pick up 4 long row of cubes
   ramp.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
   ramp2.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
   leftClaw.rotateFor(5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
@@ -70,10 +58,10 @@ void autonomous(void) {
   vex::task::sleep(500);
 
   //Turn towards scoring zone
-  frontRight.rotateFor(-0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backRight.rotateFor(-0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  frontLeft.rotateFor(0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backLeft.rotateFor(0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
+  frontRight.rotateFor(0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  backRight.rotateFor(0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  frontLeft.rotateFor(-0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  backLeft.rotateFor(-0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
 
   vex::task::sleep(500);
 
@@ -102,7 +90,7 @@ void autonomous(void) {
   vex::task::sleep(2000);
 }
 
-void usercontrol(void) {
+void drivercontrol(void) {
 
   Brain.Battery.current();
 
@@ -222,7 +210,7 @@ for(;;) {
 
 
   // Ramp movement
-  if (Controller1.ButtonX.pressing() && ramp.position(degrees) >= 475) {
+  if (Controller1.ButtonX.pressing() && ramp.position(degrees) >= 850) {
     ramp.stop(vex::brakeType::hold);
     ramp2.stop(vex::brakeType::hold);
   } else if (Controller1.ButtonA.pressing() && ramp.position(degrees) <= 25) {
@@ -268,6 +256,6 @@ int main() {
   vexcodeInit();
 
   //autonomous();
-  usercontrol();
+  drivercontrol();
 
 }
