@@ -25,7 +25,9 @@
 
 using namespace vex;
 
-void autonomous(void) {
+vex::competition Competition;
+
+void auton(void) {
 
   //Unfold & pick up 4 long row of cubes
   ramp.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
@@ -57,7 +59,7 @@ void autonomous(void) {
 
   vex::task::sleep(500);
 
-  //Turn towards scoring zone
+  // Turn towards scoring zone
   frontRight.rotateFor(0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
   backRight.rotateFor(0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
   frontLeft.rotateFor(-0.8, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
@@ -90,7 +92,7 @@ void autonomous(void) {
   vex::task::sleep(2000);
 }
 
-void drivercontrol(void) {
+void opcontrol(void) {
 
   Brain.Battery.current();
 
@@ -255,7 +257,11 @@ int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
-  //autonomous();
-  drivercontrol();
+  Competition.autonomous(auton);
+  Competition.drivercontrol(opcontrol);
+
+  for(;;) {
+    vex::task::sleep(100);
+  }
 
 }
