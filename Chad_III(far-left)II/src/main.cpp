@@ -35,12 +35,22 @@ void auton(void) {
   rightClaw.rotateFor(1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
   ramp.rotateFor(0.5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
   ramp2.rotateFor(0.5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  leftClaw.rotateFor(5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  rightClaw.rotateFor(5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  frontRight.rotateFor(5, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, false);
-  backRight.rotateFor(5, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, false);
-  frontLeft.rotateFor(5, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, false);
-  backLeft.rotateFor(5, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, true);
+
+  while (rangeSensor1.distance(distanceUnits::in) < 50) {
+    leftClaw = 100;
+    rightClaw = 100;
+    frontRight = 75;
+    backRight = 75;
+    frontLeft = 75;
+    backLeft = 75;
+  }
+
+    leftClaw = 0;
+    rightClaw = 0;
+    frontRight = 0;
+    backRight = 0;
+    frontLeft = 0;
+    backLeft = 0;
 
   vex::task::sleep(500);
 
@@ -119,8 +129,6 @@ void stack(void) {
 
 void opcontrol(void) {
 
-  Brain.Battery.current();
-
   /*
     Maps from (-100) -> 100 to itself using the function
     ((100 * pow(4, ((abs(x)-50)/12.5)))/(pow(4, ((abs(x)-50)/12.5))+1)))* ((x >
@@ -156,6 +164,7 @@ void opcontrol(void) {
       99,   99,   99,   99,   99,   99,   99,   99,   99,   99,   99,   100,
       100,  100,  100,  100,  100,  100,  100,  100,  100,  100,  100,  100,
       100,  100,  100};
+      
   int leftPower, rightPower;
   int moveSpeed, rampSpeed;
 
@@ -259,6 +268,20 @@ for(;;) {
     backLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
   }
 
+  
+  Controller1.Screen.print(rangeSensor1.distance(distanceUnits::in));
+
+  while (rangeSensor1.distance(distanceUnits::in) > 5) {
+    Controller1.rumble("-");
+    Brain.Screen.clearScreen();
+    Controller1.Screen.print(rangeSensor1.distance(distanceUnits::in));
+    wait(5, msec);
+  }
+  
+
+
+
+
   //-------------------------------------------------------------------------------
   //-------------------------------------------------------------------------------
   //-----------------------------Controller 2 Code---------------------------------
@@ -276,7 +299,7 @@ for(;;) {
     Controller2.rumble(".");
     ramp.stop(vex::brakeType::hold);
     ramp2.stop(vex::brakeType::hold);
-  } else if (Controller2.ButtonA.pressing() && ramp.position(degrees) <= 25) {
+  } else if (Controller2.ButtonA.pressing() && ramp.position(degrees) <= -100) {
     Controller2.rumble(".");
     ramp.stop(vex::brakeType::hold);
     ramp2.stop(vex::brakeType::hold);
@@ -311,7 +334,7 @@ for(;;) {
 
 
   //Runs stack function
-  Controller2.ButtonY.pressed(stack); 
+  //Controller2.ButtonY.pressed(stack); 
 
   vex::task::sleep(200);
 }
