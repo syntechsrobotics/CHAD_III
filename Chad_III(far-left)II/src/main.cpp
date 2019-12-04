@@ -28,6 +28,12 @@ using namespace vex;
 
 vex::competition Competition;
 
+void preauto(void) {
+  extern int leftPower, rightPower;
+  extern int moveSpeed, rampSpeed;
+  extern int gyroRotation;
+}
+
 void auton(void) {
 
   //Unfold & pick up 4 long row of cubes
@@ -107,8 +113,6 @@ void auton(void) {
 //Stacks automatically when partner button y is pressed
 void stack(void) {
 
-  Controller1.rumble("...");
-  Controller2.rumble("...");
 
   //Move ramp forwards
   ramp.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
@@ -126,6 +130,11 @@ void stack(void) {
 
 }
 
+void prestrafe(void) {
+
+  gyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
+
+}
 
 void opcontrol(void) {
 
@@ -167,6 +176,7 @@ void opcontrol(void) {
       
   int leftPower, rightPower;
   int moveSpeed, rampSpeed;
+  int gyroRotation;
 
   moveSpeed = 100;
   rampSpeed = 25; 
@@ -199,6 +209,9 @@ for(;;) {
     moveSpeed = 100;
   }
 
+  Controller1.ButtonLeft.pressed(prestrafe);
+  Controller1.ButtonRight.pressed(prestrafe);
+
 
   //Right side movement
   if (rightPower != 0) {
@@ -220,8 +233,6 @@ for(;;) {
     //Move Straight Down
     frontRight.spin(vex::directionType::rev, moveSpeed, vex::velocityUnits::pct);
     backRight.spin(vex::directionType::rev, moveSpeed, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonL1.pressing()) {
-
   } else {
     //Stop
     frontRight.stop(vex::brakeType::brake);
@@ -249,8 +260,6 @@ for(;;) {
     //Move Down
     frontLeft.spin(vex::directionType::rev, moveSpeed, vex::velocityUnits::pct);
     backLeft.spin(vex::directionType::rev, moveSpeed, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonL1.pressing()) {
-
   } else {
     //Stop
     frontLeft.stop(vex::brakeType::brake);
@@ -269,18 +278,6 @@ for(;;) {
   }
 
   
-  Controller1.Screen.print(rangeSensor1.distance(distanceUnits::in));
-
-  while (rangeSensor1.distance(distanceUnits::in) > 5) {
-    Controller1.rumble("-");
-    Brain.Screen.clearScreen();
-    Controller1.Screen.print(rangeSensor1.distance(distanceUnits::in));
-    wait(5, msec);
-  }
-  
-
-
-
 
   //-------------------------------------------------------------------------------
   //-------------------------------------------------------------------------------
@@ -295,7 +292,7 @@ for(;;) {
   }
 
   // Ramp movement
-  if (Controller2.ButtonX.pressing() && ramp.position(degrees) >= 500) {
+  if (Controller2.ButtonX.pressing() && ramp.position(degrees) >= 1500) {
     Controller2.rumble(".");
     ramp.stop(vex::brakeType::hold);
     ramp2.stop(vex::brakeType::hold);
@@ -344,6 +341,7 @@ int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
+  preauto();
   Competition.autonomous(auton);
   Competition.drivercontrol(opcontrol);
 
