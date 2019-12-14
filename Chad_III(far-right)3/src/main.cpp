@@ -91,10 +91,11 @@ void auton(void) {
   ramp2.rotateFor(1, vex::rotationUnits::rev, 60, vex::velocityUnits::pct, true);
   ramp.rotateFor(0.5, vex::rotationUnits::rev, 25, vex::velocityUnits::pct, false);
   ramp2.rotateFor(0.5, vex::rotationUnits::rev, 25, vex::velocityUnits::pct, true);
-  leftClaw.rotateFor(0.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
-  rightClaw.rotateFor(0.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
-  frontRight.rotateFor(0.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
-  backRight.rotateFor(0.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+
+  frontRight.rotateFor(0.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+  backRight.rotateFor(0.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+  frontLeft.rotateFor(0.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+  backLeft.rotateFor(0.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, true);
   vex::task::sleep(500);
 
   //do things
@@ -108,6 +109,7 @@ void auton(void) {
   vex::task::sleep(2000);
 
 }
+
 
 //Stacks automatically when button y is pressed
 void stack(void) {
@@ -126,6 +128,7 @@ void stack(void) {
   backRight.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
   frontLeft.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
   backLeft.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
+
 
 }
 
