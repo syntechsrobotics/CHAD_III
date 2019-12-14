@@ -71,10 +71,10 @@ void auton(void) {
   backLeft.rotateFor(-1, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, true);
 
   //Pivot
-  frontRight.rotateFor(-1.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-  backRight.rotateFor(-1.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-  frontLeft.rotateFor(1.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-  backLeft.rotateFor(1.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, true);
+  frontRight.rotateFor(1.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+  backRight.rotateFor(1.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+  frontLeft.rotateFor(-1.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+  backLeft.rotateFor(-1.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, true);
 
   vex::task::sleep(500);
 
