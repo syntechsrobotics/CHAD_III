@@ -10,7 +10,6 @@ brain  Brain;
 // VEXcode device constructors
 //controllers
 controller Controller1 = controller(primary);
-controller Controller2 = controller(partner);
 //sensors
 sonar rangeSensor1 = sonar(Brain.ThreeWirePort.A);
 sonar rangeSensor2 = sonar(Brain.ThreeWirePort.C);
