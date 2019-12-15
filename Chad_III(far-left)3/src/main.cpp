@@ -71,10 +71,10 @@ void auton(void) {
   backLeft.rotateFor(-1, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, true);
 
   //Pivot
-  frontRight.rotateFor(1.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-  backRight.rotateFor(1.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-  frontLeft.rotateFor(-1.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-  backLeft.rotateFor(-1.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, true);
+  frontRight.rotateFor(2, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+  backRight.rotateFor(2, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+  frontLeft.rotateFor(-2, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+  backLeft.rotateFor(-2, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, true);
 
   vex::task::sleep(500);
 
@@ -218,16 +218,27 @@ for(;;) {
 
   
   // Precision Control
-  if (Controller1.ButtonL1.pressing()) {
+  if (Controller1.ButtonL1.pressing() && Controller1.ButtonL2.pressing()) {
+    leftPower /= 4;
+    rightPower /= 4;
+    moveSpeed = 10;
+    rampSpeed = 10;
+    rightStrafePower = 25;
+    leftStrafePower = 25;
+  } else if (Controller1.ButtonL1.pressing()) {
     leftPower /= 2;
     rightPower /= 2;
-    moveSpeed /= 2;
+    moveSpeed = 25;
     rampSpeed = 25;
     intakeSpeed = 75;
+    rightStrafePower = 50;
+    leftStrafePower = 50;
   } else {
     intakeSpeed = 100;
     moveSpeed = 100;
     rampSpeed = 50;
+    rightStrafePower = 100;
+    leftStrafePower = 100;
   }
 
   if (rightClaw.temperature(percentUnits::pct) >= 75 || leftClaw.temperature(percentUnits::pct) >= 75) {
