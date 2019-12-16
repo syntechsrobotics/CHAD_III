@@ -383,8 +383,8 @@ void fish(void) {
   Brain.Screen.setFillColor(orange);
   Brain.Screen.drawCircle(fishX, fishY, fishSize);
   //tail
-  Brain.Screen.drawRectangle(fishX, (fishY -(fishSize/2)), (fishSize + fishSize/2), fishSize);
-  Brain.Screen.drawRectangle((fishX + fishSize), (fishY - fishSize), (fishSize/2), fishSize);
+  Brain.Screen.drawRectangle(fishX, (fishY -(fishSize/2)), (fishSize*2), fishSize);
+  Brain.Screen.drawRectangle((fishX + (fishSize*1.5)), (fishY - fishSize), (fishSize/2), (fishSize*2));
   // Brain.Screen.drawLine(fishX, fishY, (fishX + 30), (fishY - 15));
   // Brain.Screen.drawLine((fishX + 30), (fishY - 15), (fishX + 30), (fishY + 15));
   // Brain.Screen.drawLine((fishX + 30), (fishY + 15), fishX, fishY);

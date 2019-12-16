@@ -27,65 +27,34 @@ using namespace vex;
 
 vex::competition Competition;
 
-void preauto(void) {
-  extern int leftPower, rightPower;
-  extern int moveSpeed, rampSpeed;
-  extern int gyroRotation;
-}
+//Defines All Variables
+#pragma region"Definitions"
 
-void auton(void) {
+  //defining driving speed variables
+  int leftPower = 0; 
+  int rightPower = 0;
+  int moveSpeed = 100;
+  bool arcadeDrive = true;
 
-  //Unfold
-  leftClaw.rotateFor(-1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  rightClaw.rotateFor(-1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
+  //defining ramp and intake movment speed
+  int rampSpeed = 50;
+  int intakeSpeed = 100;
+  bool stacking = false;
 
-  vex::task::sleep(500);
+  //defining strafing variables
+  int leftStrafePower = 100;
+  int rightStrafePower = 100;
+  int gyroRotation = 0;
 
-  frontRight.rotateFor(1, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, false);
-  backRight.rotateFor(1, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, false);
-  frontLeft.rotateFor(1, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, false);
-  backLeft.rotateFor(1, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, true);
+  //Defining fish variables
+  int fishX = 50; 
+  int fishY = 150; 
+  int fishSize = 20;
+  color waterBlue = vex::color(0, 9, 153);
+  color landGreen = vex::color(4, 149, 28);
+  color fishGold = vex::color(255, 217, 29);
 
-  frontRight.rotateFor(-1, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, false);
-  backRight.rotateFor(-1, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, false);
-  frontLeft.rotateFor(-1, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, false);
-  backLeft.rotateFor(-1, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, true);
-
-  vex::task::sleep(500);
-  vex::task::sleep(2000);
-
-}
-
-
-//Stacks automatically when button y is pressed
-void stack(void) {
-
-
-  //Move ramp forwards
-  ramp.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  ramp2.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
-
-  vex::task::sleep(500);
-
-  //do things
-  leftClaw.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  rightClaw.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  frontRight.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backRight.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  frontLeft.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-  backLeft.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
-
-
-}
-
-// void prestrafe(void) {
-
-//   gyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
-
-// }
-
-void opcontrol(void) {
-
+  
   /*
     Maps from (-100) -> 100 to itself using the function
     ((100 * pow(4, ((abs(x)-50)/12.5)))/(pow(4, ((abs(x)-50)/12.5))+1)))* ((x >
@@ -122,45 +91,66 @@ void opcontrol(void) {
       100,  100,  100,  100,  100,  100,  100,  100,  100,  100,  100,  100,
       100,  100,  100};
       
+#pragma endregion
+
+//Autonomous Section of Match
+void auton(void) {
+
+  //Unfold
+  leftClaw.rotateFor(-1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  rightClaw.rotateFor(-1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
+
+  vex::task::sleep(500);
+
+  frontRight.rotateFor(1, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, false);
+  backRight.rotateFor(1, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, false);
+  frontLeft.rotateFor(1, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, false);
+  backLeft.rotateFor(1, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, true);
+
+  frontRight.rotateFor(-1, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, false);
+  backRight.rotateFor(-1, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, false);
+  frontLeft.rotateFor(-1, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, false);
+  backLeft.rotateFor(-1, vex::rotationUnits::rev, 75, vex::velocityUnits::pct, true);
+
+  vex::task::sleep(500);
+  vex::task::sleep(2000);
+
+}
+
+//Stacks automatically when button y is pressed
+void stack(void) {
 
 
-  //defining driving speed variables
-  int leftPower, rightPower, moveSpeed;
+  //Move ramp forwards
+  ramp.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  ramp2.rotateFor(2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
 
-  //defining ramp and intake movment speed
-  int rampSpeed, intakeSpeed;
+  vex::task::sleep(500);
 
-  //defining strafing variables
-  int leftStrafePower, rightStrafePower;
-  int gyroRotation;
-
-  //setting variables
-  moveSpeed = 100;
-  rightStrafePower = 100;
-  leftStrafePower = 100;
-  intakeSpeed = 100;
-  rampSpeed = 50; 
+  //do things
+  leftClaw.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  rightClaw.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  frontRight.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  backRight.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  frontLeft.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  backLeft.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, true);
 
 
-for(;;) {
+}
 
-
-  /*
-  --------------------------------------------------------------------
-  --------------------------Drive Movement----------------------------
-  --------------------------------------------------------------------
-  */
-
-
-  // Tank Control
-  // leftPower = sigmoid_map[Controller1.Axis3.value() + 127];
-  // rightPower = sigmoid_map[Controller1.Axis2.value() + 127];
-
-  // Arcade control
-  leftPower = sigmoid_map[Controller1.Axis3.value() + 127] +
-              sigmoid_map[Controller1.Axis4.value() + 127];
-  rightPower = sigmoid_map[Controller1.Axis3.value() + 127] -
-               sigmoid_map[Controller1.Axis4.value() + 127];
+//Controls wheel movements for driver control section
+void driveMovement(void) {
+  
+  if (arcadeDrive == true) {
+    // Arcade control
+    leftPower = sigmoid_map[Controller1.Axis3.value() + 127] + sigmoid_map[Controller1.Axis4.value() + 127];
+    rightPower = sigmoid_map[Controller1.Axis3.value() + 127] - sigmoid_map[Controller1.Axis4.value() + 127];
+  } else {
+    // Tank Control
+    leftPower = sigmoid_map[Controller1.Axis3.value() + 127];
+    rightPower = sigmoid_map[Controller1.Axis2.value() + 127];
+  }
+  
 
   
   // Precision Control
@@ -258,13 +248,11 @@ for(;;) {
     backRight.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
     backLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
   }
+}
 
-  /*
-  --------------------------------------------------------------------
-  ----------------------Ramp and Intake Movement----------------------
-  --------------------------------------------------------------------
-  */
-
+//Controls ramp n intake movements for driver control section
+void rampNIntake(void) {
+  
   // Ramp movement
   if (Controller1.ButtonX.pressing() && ramp.position(degrees) >= 1500) {
     Controller1.rumble(".");
@@ -299,20 +287,77 @@ for(;;) {
 
 
   //Runs stack function
-  //Controller1.ButtonY.pressed(stack); 
+  if (Controller1.ButtonY.pressing() && stacking == false) {
+    thread(stack).detach();
+  }
 
+}
 
-  /*
-  --------------------------------------------------------------------
-  --------------------------------Extra------------------------------
-  --------------------------------------------------------------------
-  */
+//fish
+void fish(void) {
+
+  Brain.Screen.clearScreen();
+  //fish size = (average distance from range sensors)*5
+  fishSize = ((rangeSensor1.distance(inches) + rangeSensor2.distance(inches))/2)*5;
+  if (fishSize >= 25) {
+    fishSize = 25;
+  }
+
+  //Draw Water
+  Brain.Screen.setPenColor(waterBlue);
+  Brain.Screen.setFillColor(waterBlue);
+  Brain.Screen.drawRectangle(0, 0, 500, 500);
+
+  //Draw land
+  Brain.Screen.setPenColor(landGreen);
+  Brain.Screen.setFillColor(landGreen);
+  Brain.Screen.drawCircle(3, 8, 17);
+  Brain.Screen.drawCircle(36, 5, 38);
+  Brain.Screen.drawCircle(80, 10, 50);
+  Brain.Screen.drawCircle(138, 9, 39);
+  Brain.Screen.drawCircle(189, 3, 63);
+
+  //fish
+  Brain.Screen.setPenColor(fishGold);
+  Brain.Screen.setFillColor(fishGold);
+  Brain.Screen.drawCircle(fishX, fishY, fishSize);
+  //tail
+  Brain.Screen.drawRectangle(fishX, (fishY -(fishSize/2)), (fishSize*2), fishSize);
+  Brain.Screen.drawRectangle((fishX + (fishSize*1.5)), (fishY - fishSize), (fishSize/2), (fishSize*2));
+  // Brain.Screen.drawLine(fishX, fishY, (fishX + 30), (fishY - 15));
+  // Brain.Screen.drawLine((fishX + 30), (fishY - 15), (fishX + 30), (fishY + 15));
+  // Brain.Screen.drawLine((fishX + 30), (fishY + 15), fishX, fishY);
+
+  //move fish
+  fishX -= 1;
+  if (fishX < (0 - (fishSize / 2))) {
+    fishX = 500;
+  }  
+  
+}
+
+//Driver Control Section
+void opcontrol(void) {
+
+for(;;) {
+  
+  //------------------------Drive Movement---------------------------
+
+  driveMovement();
+
+  //--------------------Ramp and Intake Movement---------------------
+  
+  rampNIntake();
+
+  //------------------------------Extra------------------------------
+  
   
   //Rumble controller at 30 seconds
     if (Brain.timer(timeUnits::sec) == 30) {
     Controller1.rumble("...");
   } 
 
+  fish();
 
   //Adds delay between each run
   vex::task::sleep(200);
@@ -324,7 +369,6 @@ int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
-  preauto();
   Competition.autonomous(auton);
   Competition.drivercontrol(opcontrol);
 
