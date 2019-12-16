@@ -50,7 +50,9 @@ vex::competition Competition;
   int fishX = 50; 
   int fishY = 150; 
   int fishSize = 20;
-
+  color waterBlue = vex::color(0, 9, 153);
+  color landGreen = vex::color(4, 149, 28);
+  color fishGold = vex::color(255, 217, 29);
   
   /*
     Maps from (-100) -> 100 to itself using the function
@@ -365,13 +367,13 @@ void fish(void) {
   }
 
   //Draw Water
-  Brain.Screen.setPenColor(vex::color(50, 50, 200));
-  Brain.Screen.setFillColor(vex::color(50, 50, 200));
+  Brain.Screen.setPenColor(waterBlue);
+  Brain.Screen.setFillColor(waterBlue);
   Brain.Screen.drawRectangle(0, 0, 500, 500);
 
   //Draw land
-  Brain.Screen.setPenColor(green);
-  Brain.Screen.setFillColor(green);
+  Brain.Screen.setPenColor(landGreen);
+  Brain.Screen.setFillColor(landGreen);
   Brain.Screen.drawCircle(3, 8, 17);
   Brain.Screen.drawCircle(36, 5, 38);
   Brain.Screen.drawCircle(80, 10, 50);
@@ -379,8 +381,8 @@ void fish(void) {
   Brain.Screen.drawCircle(189, 3, 63);
 
   //fish
-  Brain.Screen.setPenColor(orange);
-  Brain.Screen.setFillColor(orange);
+  Brain.Screen.setPenColor(fishGold);
+  Brain.Screen.setFillColor(fishGold);
   Brain.Screen.drawCircle(fishX, fishY, fishSize);
   //tail
   Brain.Screen.drawRectangle(fishX, (fishY -(fishSize/2)), (fishSize*2), fishSize);
