@@ -102,7 +102,18 @@ vex::competition Competition;
       
 #pragma endregion
 
-void preAuto(void) {
+
+
+/**
+ * Used to initialize code/tasks/devices added using tools in VEXcode Text.
+ * 
+ * This should be called at the start of your int main function.
+ */
+void  vexcodeInit( void ) {
+
+
+
+#pragma region "buttons"
   onePoint.draw();
   farRed.draw();
   farBlue.draw();
@@ -124,6 +135,8 @@ void preAuto(void) {
     }
 
   }
+#pragma endregion
+
 }
 
 //Autonomous Section of Match
@@ -604,8 +617,6 @@ int main() {
 
   Competition.autonomous(auton);
   Competition.drivercontrol(opcontrol);
-
-  preAuto();
 
   for(;;) {
     vex::task::sleep(100);
