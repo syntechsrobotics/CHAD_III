@@ -20,16 +20,9 @@ motor ramp = motor(PORT20, ratio36_1, true);
 motor ramp2 = motor(PORT12, ratio36_1, false);
 motor rightClaw = motor(PORT18, ratio18_1, true);
 motor leftClaw = motor(PORT13, ratio18_1, false);
+motor grabbyGuy = motor(PORT3, ratio18_1, false);
 
 // VEXcode generated functions
 
 
 
-/**
- * Used to initialize code/tasks/devices added using tools in VEXcode Text.
- * 
- * This should be called at the start of your int main function.
- */
-void vexcodeInit( void ) {
-  // nothing to initialize
-}
