@@ -47,9 +47,11 @@ bool stacking = false;
 int grabbySpeed = 50;
 
 // defining strafing variables
-int leftStrafePower = 100;
-int rightStrafePower = 100;
+int frontStrafePower = 100;
+int backStrafePower = 100;
 int gyroRotation = 0;
+int preGyroRotation = 0;
+int gyroCounter = 0;
 
 // Defining fish variables
 int fishX = 50;
@@ -168,9 +170,8 @@ void auton(void) {
     vex::task::sleep(500);
     vex::task::sleep(2000);
 
-    // Run Far Right
   } else if (autoNumber == 2) {
-
+    //Run Far Right
     // Unfold
     leftClaw.rotateFor(-1, vex::rotationUnits::rev, 100,
                        vex::velocityUnits::pct, false);
@@ -280,9 +281,8 @@ void auton(void) {
 
     vex::task::sleep(2000);
 
-    // Run Far Left
   } else if (autoNumber == 3) {
-
+    //Run far left
     // Unfold
     leftClaw.rotateFor(-1, vex::rotationUnits::rev, 100,
                        vex::velocityUnits::pct, false);
@@ -457,36 +457,35 @@ void driveMovement(void) {
     moveSpeed = 10;
     rampSpeed = 10;
     grabbySpeed = 5;
-    rightStrafePower = 25;
-    leftStrafePower = 25;
+    backStrafePower = 25;
+    frontStrafePower = 25;
   } else if (Controller1.ButtonL1.pressing()) {
     leftPower /= 2;
     rightPower /= 2;
     moveSpeed = 25;
     rampSpeed = 25;
     grabbySpeed = 10;
-    rightStrafePower = 50;
-    leftStrafePower = 50;
+    backStrafePower = 50;
+    frontStrafePower = 50;
   } else {
     intakeSpeed = 100;
     moveSpeed = 100;
     rampSpeed = 50;
     grabbySpeed = 50;
-    rightStrafePower = 100;
-    leftStrafePower = 100;
+    backStrafePower = 100;
+    frontStrafePower = 100;
   }
 
+  //prevents overheating
   if (rightClaw.temperature(percentUnits::pct) >= 75 ||
       leftClaw.temperature(percentUnits::pct) >= 75) {
     intakeSpeed = 50;
   }
 
-  // Strafe speed variablility
-  if (Controller1.ButtonL2.pressing()) {
-    gyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
-    Controller1.Screen.clearLine();
-    Controller1.Screen.print(gyroRotation);
-  }
+
+
+
+
 
   // Right side movement
   if (Controller1.Axis4.value() >= 10 && Controller1.Axis4.value() <= -10){
@@ -501,15 +500,15 @@ void driveMovement(void) {
                    vex::velocityUnits::pct);
   } else if (Controller1.ButtonLeft.pressing()) {
     // Strafe left
-    backRight.spin(vex::directionType::fwd, rightStrafePower,
+    backRight.spin(vex::directionType::fwd, backStrafePower,
                    vex::velocityUnits::pct);
-    frontRight.spin(vex::directionType::rev, rightStrafePower,
+    frontRight.spin(vex::directionType::rev, backStrafePower,
                     vex::velocityUnits::pct);
   } else if (Controller1.ButtonRight.pressing()) {
     // Strafe right
-    backRight.spin(vex::directionType::rev, rightStrafePower,
+    backRight.spin(vex::directionType::rev, backStrafePower,
                    vex::velocityUnits::pct);
-    frontRight.spin(vex::directionType::fwd, rightStrafePower,
+    frontRight.spin(vex::directionType::fwd, backStrafePower,
                     vex::velocityUnits::pct);
   } else if (Controller1.ButtonUp.pressing()) {
     // Move Straight Up
@@ -536,18 +535,6 @@ void driveMovement(void) {
     //drive
     frontLeft.spin(vex::directionType::fwd, leftPower, vex::velocityUnits::pct);
     backLeft.spin(vex::directionType::fwd, leftPower, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonLeft.pressing()) {
-    // Strafe left
-    frontLeft.spin(vex::directionType::fwd, leftStrafePower,
-                   vex::velocityUnits::pct);
-    backLeft.spin(vex::directionType::rev, leftStrafePower,
-                  vex::velocityUnits::pct);
-  } else if (Controller1.ButtonRight.pressing()) {
-    // Strafe right
-    frontLeft.spin(vex::directionType::rev, leftStrafePower,
-                   vex::velocityUnits::pct);
-    backLeft.spin(vex::directionType::fwd, leftStrafePower,
-                  vex::velocityUnits::pct);
   } else if (Controller1.ButtonUp.pressing()) {
     // Move Up
     frontLeft.spin(vex::directionType::fwd, moveSpeed, vex::velocityUnits::pct);
@@ -561,6 +548,56 @@ void driveMovement(void) {
     frontLeft.stop(vex::brakeType::brake);
     backLeft.stop(vex::brakeType::brake);
   }
+
+  
+  //gyro stuff
+  if (gyroCounter < 2) {
+    gyroCounter += 1;
+  } else {
+    preGyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
+    gyroCounter = 0;
+  }
+
+  if (Controller1.ButtonLeft.pressing()) {
+    // Strafe left
+    gyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
+
+    if (gyroRotation != preGyroRotation) {
+      frontStrafePower /= gyroRotation;
+    }
+
+    backRight.spin(vex::directionType::fwd, backStrafePower,
+                   vex::velocityUnits::pct);
+    frontRight.spin(vex::directionType::rev, frontStrafePower,
+                    vex::velocityUnits::pct);
+    frontLeft.spin(vex::directionType::fwd, frontStrafePower,
+                   vex::velocityUnits::pct);
+    backLeft.spin(vex::directionType::rev, backStrafePower,
+                  vex::velocityUnits::pct);
+  } else if (Controller1.ButtonRight.pressing()) {
+    // Strafe right
+    gyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
+
+    if (gyroRotation != preGyroRotation) {
+      frontStrafePower /= (gyroRotation/preGyroRotation);
+    }
+
+    backRight.spin(vex::directionType::rev, backStrafePower,
+                   vex::velocityUnits::pct);
+    frontRight.spin(vex::directionType::fwd, frontStrafePower,
+                    vex::velocityUnits::pct);
+    frontLeft.spin(vex::directionType::rev, frontStrafePower,
+                   vex::velocityUnits::pct);
+    backLeft.spin(vex::directionType::fwd, backStrafePower,
+                  vex::velocityUnits::pct);
+  }
+
+  Brain.Screen.clearScreen();
+
+  task::sleep(20);
+  //gyroRotation = gyroSensor.value(analogUnits::range12bit);
+  Brain.Screen.setCursor(3,3);
+  Brain.Screen.print(gyroSensor.value(analogUnits::range12bit));
 
   // // Do some sick donuts
   // if (Controller1.ButtonB.pressing()) {
@@ -704,7 +741,7 @@ void opcontrol(void) {
       }
 
       // fish
-      fish();
+      //fish();
 
       // switch to pong time
       if (Controller1.ButtonL1.pressing() && Controller1.ButtonL2.pressing() &&
