@@ -563,7 +563,7 @@ void driveMovement(void) {
     gyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
 
     if (gyroRotation != preGyroRotation) {
-      frontStrafePower /= gyroRotation;
+      frontStrafePower *= gyroRotation;
     }
 
     backRight.spin(vex::directionType::fwd, backStrafePower,
@@ -579,7 +579,7 @@ void driveMovement(void) {
     gyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
 
     if (gyroRotation != preGyroRotation) {
-      frontStrafePower /= (gyroRotation/preGyroRotation);
+      frontStrafePower *= (gyroRotation/preGyroRotation);
     }
 
     backRight.spin(vex::directionType::rev, backStrafePower,
