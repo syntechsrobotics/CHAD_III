@@ -61,6 +61,14 @@ color waterBlue = vex::color(0, 9, 153);
 color landGreen = vex::color(4, 149, 28);
 color fishGold = vex::color(255, 217, 29);
 
+//defining pong variables
+int pingY = 50;
+int pongY = 50;
+int ballX = 70;
+int ballY = 90;
+bool ballFacingRightQuestionMark = true;
+bool ballGoingUpQuestionMark = false;
+
 std::string pongQuestionMark = "No";
 
 /*
@@ -101,6 +109,8 @@ int sigmoid_map[255] = {
 
 #pragma endregion
 
+
+
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Text.
  *
@@ -108,35 +118,36 @@ int sigmoid_map[255] = {
  */
 void vexcodeInit(void) {
 
-/*
-  lcdButton onePoint(10, 10, 80, 50, "One Point", yellow);
-  lcdButton farRed(100, 10, 80, 50, "Far Red", red);
-  lcdButton farBlue(190, 10, 80, 50, "Far Blue", blue);
+  /*
+    lcdButton onePoint(10, 10, 80, 50, "One Point", yellow);
+    lcdButton farRed(100, 10, 80, 50, "Far Red", red);
+    lcdButton farBlue(190, 10, 80, 50, "Far Blue", blue);
 
-#pragma region "buttons"
-  onePoint.draw();
-  farRed.draw();
-  farBlue.draw();
+  #pragma region "buttons"
+    onePoint.draw();
+    farRed.draw();
+    farBlue.draw();
 
-  if (Brain.Screen.pressing()) {
-    if (onePoint.pressing()) {
-      autoNumber = 1;
-      Brain.Screen.clearScreen();
-    } else if (farRed.pressing()) {
-      autoNumber = 2;
-      Brain.Screen.clearScreen();
-    } else if (farBlue.pressing()) {
-      autoNumber = 3;
-      Brain.Screen.clearScreen();
+    if (Brain.Screen.pressing()) {
+      if (onePoint.pressing()) {
+        autoNumber = 1;
+        Brain.Screen.clearScreen();
+      } else if (farRed.pressing()) {
+        autoNumber = 2;
+        Brain.Screen.clearScreen();
+      } else if (farBlue.pressing()) {
+        autoNumber = 3;
+        Brain.Screen.clearScreen();
+      }
     }
-  }
-  */
+    */
 
 #pragma endregion
-
 }
 
-// Autonomous Section of Match
+
+
+//-----------------------------Autonomous Section of Match------------------------------
 void auton(void) {
 
   // Run One Point
@@ -172,226 +183,103 @@ void auton(void) {
 
   } else if (autoNumber == 2) {
     //Run Far Right
-    // Unfold
-    leftClaw.rotateFor(-1, vex::rotationUnits::rev, 100,
-                       vex::velocityUnits::pct, false);
-    rightClaw.rotateFor(-1, vex::rotationUnits::rev, 100,
-                        vex::velocityUnits::pct, true);
+    //Unfold
+    leftClaw.rotateFor(-0.5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    rightClaw.rotateFor(-0.5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    frontRight.rotateFor(.5, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, false);
+    backRight.rotateFor(.5, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(.5, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(.5, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, true);
 
-    // //pick up 4 long row of cubes
-    // while (rangeSensor1.distance(distanceUnits::in) < 3 0) {
-    //   leftClaw.spin(directionType::fwd, 100, velocityUnits::pct);
-    //   rightClaw.spin(directionType::fwd, 100, velocityUnits::pct);
-    //   frontRight.spin(directionType::fwd, 50, velocityUnits::pct);
-    //   backRight.spin(directionType::fwd, 50, velocityUnits::pct);
-    //   frontLeft.spin(directionType::fwd, 50, velocityUnits::pct);
-    //   backRight.spin(directionType::fwd, 50, velocityUnits::pct);
-    // }
-    //   leftClaw.stop(brakeType::coast);
-    //   rightClaw.stop(brakeType::coast);
-    //   frontRight.stop(brakeType::brake);
-    //   backRight.stop(brakeType::brake);
-    //   frontLeft.stop(brakeType::brake);
-    //   backLeft.stop(brakeType::brake);
+    ramp.rotateFor(-0.3, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    leftClaw.rotateFor(15, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    rightClaw.rotateFor(15, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    frontRight.rotateFor(3, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backRight.rotateFor(3, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(3, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(3, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, true);
 
-    leftClaw.rotateFor(10, vex::rotationUnits::rev, 100,
-                       vex::velocityUnits::pct, false);
-    rightClaw.rotateFor(10, vex::rotationUnits::rev, 100,
-                        vex::velocityUnits::pct, false);
+    //turn
+    frontLeft.rotateFor(-1.6, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(-1.6, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+    frontRight.rotateFor(-3.7, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+    backRight.rotateFor(-3.7, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, true);
+
+    //move forwards and move up ramp
+   leftClaw.rotateFor(-0.9, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    rightClaw.rotateFor(-0.9, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    frontRight.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backRight.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, true);
+    
+    ramp.rotateFor(1.6, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, true);
+    frontRight.rotateFor(0.1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backRight.rotateFor(0.1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(0.1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(0.1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, true);
+   
+
+    //move back
+    frontRight.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backRight.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, true);
 
     vex::task::sleep(100);
-
-    frontRight.rotateFor(4, vex::rotationUnits::rev, 40,
-                         vex::velocityUnits::pct, false);
-    backRight.rotateFor(4, vex::rotationUnits::rev, 40, vex::velocityUnits::pct,
-                        false);
-    frontLeft.rotateFor(4, vex::rotationUnits::rev, 40, vex::velocityUnits::pct,
-                        false);
-    backLeft.rotateFor(4, vex::rotationUnits::rev, 40, vex::velocityUnits::pct,
-                       true);
-
-    vex::task::sleep(500);
-
-    frontRight.rotateFor(-1, vex::rotationUnits::rev, 40,
-                         vex::velocityUnits::pct, false);
-    backRight.rotateFor(-1, vex::rotationUnits::rev, 40,
-                        vex::velocityUnits::pct, false);
-    frontLeft.rotateFor(-1, vex::rotationUnits::rev, 40,
-                        vex::velocityUnits::pct, false);
-    backLeft.rotateFor(-1, vex::rotationUnits::rev, 40, vex::velocityUnits::pct,
-                       true);
-
-    // Pivot
-    frontRight.rotateFor(-2, vex::rotationUnits::rev, 50,
-                         vex::velocityUnits::pct, false);
-    backRight.rotateFor(-2, vex::rotationUnits::rev, 50,
-                        vex::velocityUnits::pct, false);
-    frontLeft.rotateFor(2, vex::rotationUnits::rev, 50, vex::velocityUnits::pct,
-                        false);
-    backLeft.rotateFor(2, vex::rotationUnits::rev, 50, vex::velocityUnits::pct,
-                       true);
-
-    vex::task::sleep(500);
-
-    // Go towards goal zone
-    frontRight.rotateFor(2.5, vex::rotationUnits::rev, 75,
-                         vex::velocityUnits::pct, false);
-    backRight.rotateFor(2.5, vex::rotationUnits::rev, 75,
-                        vex::velocityUnits::pct, false);
-    frontLeft.rotateFor(2.5, vex::rotationUnits::rev, 75,
-                        vex::velocityUnits::pct, false);
-    backLeft.rotateFor(2.5, vex::rotationUnits::rev, 75,
-                       vex::velocityUnits::pct, true);
-
-    vex::task::sleep(500);
-
-    // Move ramp forwards
-    ramp.rotateFor(1, vex::rotationUnits::rev, 60, vex::velocityUnits::pct,
-                   false);
-    ramp2.rotateFor(1, vex::rotationUnits::rev, 60, vex::velocityUnits::pct,
-                    true);
-    ramp.rotateFor(0.5, vex::rotationUnits::rev, 25, vex::velocityUnits::pct,
-                   false);
-    ramp2.rotateFor(0.5, vex::rotationUnits::rev, 25, vex::velocityUnits::pct,
-                    true);
-
-    frontRight.rotateFor(0.5, vex::rotationUnits::rev, 50,
-                         vex::velocityUnits::pct, false);
-    backRight.rotateFor(0.5, vex::rotationUnits::rev, 50,
-                        vex::velocityUnits::pct, false);
-    frontLeft.rotateFor(0.5, vex::rotationUnits::rev, 50,
-                        vex::velocityUnits::pct, false);
-    backLeft.rotateFor(0.5, vex::rotationUnits::rev, 50,
-                       vex::velocityUnits::pct, true);
-    vex::task::sleep(500);
-
-    // do things
-    leftClaw.rotateFor(-2, vex::rotationUnits::rev, 100,
-                       vex::velocityUnits::pct, false);
-    rightClaw.rotateFor(-2, vex::rotationUnits::rev, 100,
-                        vex::velocityUnits::pct, false);
-    frontRight.rotateFor(-2, vex::rotationUnits::rev, 80,
-                         vex::velocityUnits::pct, false);
-    backRight.rotateFor(-2, vex::rotationUnits::rev, 80,
-                        vex::velocityUnits::pct, false);
-    frontLeft.rotateFor(-2, vex::rotationUnits::rev, 80,
-                        vex::velocityUnits::pct, false);
-    backLeft.rotateFor(-2, vex::rotationUnits::rev, 80, vex::velocityUnits::pct,
-                       true);
-
-    vex::task::sleep(2000);
+  
 
   } else if (autoNumber == 3) {
     //Run far left
-    // Unfold
-    leftClaw.rotateFor(-1, vex::rotationUnits::rev, 100,
-                       vex::velocityUnits::pct, false);
-    rightClaw.rotateFor(-1, vex::rotationUnits::rev, 100,
-                        vex::velocityUnits::pct, true);
+    //Unfold
+    leftClaw.rotateFor(-0.5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    rightClaw.rotateFor(-0.5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    frontRight.rotateFor(.5, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, false);
+    backRight.rotateFor(.5, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(.5, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(.5, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, true);
 
-    // //pick up 4 long row of cubes
-    // while (rangeSensor1.distance(distanceUnits::in) < 3 0) {
-    //   leftClaw.spin(directionType::fwd, 100, velocityUnits::pct);
-    //   rightClaw.spin(directionType::fwd, 100, velocityUnits::pct);
-    //   frontRight.spin(directionType::fwd, 50, velocityUnits::pct);
-    //   backRight.spin(directionType::fwd, 50, velocityUnits::pct);
-    //   frontLeft.spin(directionType::fwd, 50, velocityUnits::pct);
-    //   backRight.spin(directionType::fwd, 50, velocityUnits::pct);
-    // }
-    //   leftClaw.stop(brakeType::coast);
-    //   rightClaw.stop(brakeType::coast);
-    //   frontRight.stop(brakeType::brake);
-    //   backRight.stop(brakeType::brake);
-    //   frontLeft.stop(brakeType::brake);
-    //   backLeft.stop(brakeType::brake);
+    ramp.rotateFor(-0.3, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    leftClaw.rotateFor(13, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    rightClaw.rotateFor(13, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    frontRight.rotateFor(3.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backRight.rotateFor(3.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(3.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(3.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, true);
 
-    leftClaw.rotateFor(10, vex::rotationUnits::rev, 100,
-                       vex::velocityUnits::pct, false);
-    rightClaw.rotateFor(10, vex::rotationUnits::rev, 100,
-                        vex::velocityUnits::pct, false);
-    vex::task::sleep(100);
-    frontRight.rotateFor(4, vex::rotationUnits::rev, 40,
-                         vex::velocityUnits::pct, false);
-    backRight.rotateFor(4, vex::rotationUnits::rev, 40, vex::velocityUnits::pct,
-                        false);
-    frontLeft.rotateFor(4, vex::rotationUnits::rev, 40, vex::velocityUnits::pct,
-                        false);
-    backLeft.rotateFor(4, vex::rotationUnits::rev, 40, vex::velocityUnits::pct,
-                       true);
+    //turn
+    frontRight.rotateFor(-1.6, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+    backRight.rotateFor(-1.6, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(-3.7, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(-3.7, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, true);
 
-    vex::task::sleep(500);
+    //move forwards and move up ramp
+   leftClaw.rotateFor(-0.5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    rightClaw.rotateFor(-0.5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    frontRight.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backRight.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, true);
+    
+    ramp.rotateFor(1.6, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, true);
+    frontRight.rotateFor(0.25, vex::rotationUnits::rev, 10, vex::velocityUnits::pct, false);
+    backRight.rotateFor(0.25, vex::rotationUnits::rev, 10, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(0.15, vex::rotationUnits::rev, 20, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(0.15, vex::rotationUnits::rev, 20, vex::velocityUnits::pct, true);
+   
 
-    frontRight.rotateFor(-1, vex::rotationUnits::rev, 40,
-                         vex::velocityUnits::pct, false);
-    backRight.rotateFor(-1, vex::rotationUnits::rev, 40,
-                        vex::velocityUnits::pct, false);
-    frontLeft.rotateFor(-1, vex::rotationUnits::rev, 40,
-                        vex::velocityUnits::pct, false);
-    backLeft.rotateFor(-1, vex::rotationUnits::rev, 40, vex::velocityUnits::pct,
-                       true);
+    //move back
+    frontRight.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backRight.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, true);
 
-    // Pivot
-    frontRight.rotateFor(2, vex::rotationUnits::rev, 50,
-                         vex::velocityUnits::pct, false);
-    backRight.rotateFor(2, vex::rotationUnits::rev, 50, vex::velocityUnits::pct,
-                        false);
-    frontLeft.rotateFor(-2, vex::rotationUnits::rev, 50,
-                        vex::velocityUnits::pct, false);
-    backLeft.rotateFor(-2, vex::rotationUnits::rev, 50, vex::velocityUnits::pct,
-                       true);
-
-    vex::task::sleep(500);
-
-    // Go towards goal zone
-    frontRight.rotateFor(2.5, vex::rotationUnits::rev, 75,
-                         vex::velocityUnits::pct, false);
-    backRight.rotateFor(2.5, vex::rotationUnits::rev, 75,
-                        vex::velocityUnits::pct, false);
-    frontLeft.rotateFor(2.5, vex::rotationUnits::rev, 75,
-                        vex::velocityUnits::pct, false);
-    backLeft.rotateFor(2.5, vex::rotationUnits::rev, 75,
-                       vex::velocityUnits::pct, true);
-
-    vex::task::sleep(500);
-
-    // Move ramp forwards
-    ramp.rotateFor(1, vex::rotationUnits::rev, 60, vex::velocityUnits::pct,
-                   false);
-    ramp2.rotateFor(1, vex::rotationUnits::rev, 60, vex::velocityUnits::pct,
-                    true);
-    ramp.rotateFor(0.5, vex::rotationUnits::rev, 25, vex::velocityUnits::pct,
-                   false);
-    ramp2.rotateFor(0.5, vex::rotationUnits::rev, 25, vex::velocityUnits::pct,
-                    true);
-
-    frontRight.rotateFor(0.5, vex::rotationUnits::rev, 50,
-                         vex::velocityUnits::pct, false);
-    backRight.rotateFor(0.5, vex::rotationUnits::rev, 50,
-                        vex::velocityUnits::pct, false);
-    frontLeft.rotateFor(0.5, vex::rotationUnits::rev, 50,
-                        vex::velocityUnits::pct, false);
-    backLeft.rotateFor(0.5, vex::rotationUnits::rev, 50,
-                       vex::velocityUnits::pct, true);
-    vex::task::sleep(500);
-
-    // do things
-    leftClaw.rotateFor(-2, vex::rotationUnits::rev, 100,
-                       vex::velocityUnits::pct, false);
-    rightClaw.rotateFor(-2, vex::rotationUnits::rev, 100,
-                        vex::velocityUnits::pct, false);
-    frontRight.rotateFor(-2, vex::rotationUnits::rev, 80,
-                         vex::velocityUnits::pct, false);
-    backRight.rotateFor(-2, vex::rotationUnits::rev, 80,
-                        vex::velocityUnits::pct, false);
-    frontLeft.rotateFor(-2, vex::rotationUnits::rev, 80,
-                        vex::velocityUnits::pct, false);
-    backLeft.rotateFor(-2, vex::rotationUnits::rev, 80, vex::velocityUnits::pct,
-                       true);
-
-    vex::task::sleep(2000);
+    vex::task::sleep(2500);
   }
 }
 
+
+//----------------------------------OP Control Section----------------------------------
 // Stacks automatically when button y is pressed
 void stack(void) {
 
@@ -438,228 +326,233 @@ void stack(void) {
 // Controls wheel movements for driver control section
 void driveMovement(void) {
 
-  if (arcadeDrive == true) {
-    // Arcade control
-    leftPower = sigmoid_map[Controller1.Axis3.value() + 127] +
-                sigmoid_map[Controller1.Axis4.value() + 127];
-    rightPower = sigmoid_map[Controller1.Axis3.value() + 127] -
-                 sigmoid_map[Controller1.Axis4.value() + 127];
-  } else {
-    // Tank Control
-    leftPower = sigmoid_map[Controller1.Axis3.value() + 127];
-    rightPower = sigmoid_map[Controller1.Axis2.value() + 127];
-  }
+  if (stacking == false) {
 
-  // Precision Control
-  if (Controller1.ButtonL1.pressing() && Controller1.ButtonL2.pressing()) {
-    leftPower /= 4;
-    rightPower /= 4;
-    moveSpeed = 10;
-    rampSpeed = 10;
-    grabbySpeed = 5;
-    backStrafePower = 25;
-    frontStrafePower = 25;
-  } else if (Controller1.ButtonL1.pressing()) {
-    leftPower /= 2;
-    rightPower /= 2;
-    moveSpeed = 25;
-    rampSpeed = 25;
-    grabbySpeed = 10;
-    backStrafePower = 50;
-    frontStrafePower = 50;
-  } else {
-    intakeSpeed = 100;
-    moveSpeed = 100;
-    rampSpeed = 50;
-    grabbySpeed = 50;
-    backStrafePower = 100;
-    frontStrafePower = 100;
-  }
-
-  //prevents overheating
-  if (rightClaw.temperature(percentUnits::pct) >= 75 ||
-      leftClaw.temperature(percentUnits::pct) >= 75) {
-    intakeSpeed = 50;
-  }
-
-
-
-
-
-
-  // Right side movement
-  if (Controller1.Axis4.value() >= 10 && Controller1.Axis4.value() <= -10){
-    //turn
-    frontRight.spin(vex::directionType::fwd, rightPower,
-                    vex::velocityUnits::pct);
-  } else if (rightPower != 0) {
-    //drive
-    frontRight.spin(vex::directionType::fwd, rightPower,
-                    vex::velocityUnits::pct);
-    backRight.spin(vex::directionType::fwd, rightPower,
-                   vex::velocityUnits::pct);
-  } else if (Controller1.ButtonLeft.pressing()) {
-    // Strafe left
-    backRight.spin(vex::directionType::fwd, backStrafePower,
-                   vex::velocityUnits::pct);
-    frontRight.spin(vex::directionType::rev, backStrafePower,
-                    vex::velocityUnits::pct);
-  } else if (Controller1.ButtonRight.pressing()) {
-    // Strafe right
-    backRight.spin(vex::directionType::rev, backStrafePower,
-                   vex::velocityUnits::pct);
-    frontRight.spin(vex::directionType::fwd, backStrafePower,
-                    vex::velocityUnits::pct);
-  } else if (Controller1.ButtonUp.pressing()) {
-    // Move Straight Up
-    frontRight.spin(vex::directionType::fwd, moveSpeed,
-                    vex::velocityUnits::pct);
-    backRight.spin(vex::directionType::fwd, moveSpeed, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonDown.pressing()) {
-    // Move Straight Down
-    frontRight.spin(vex::directionType::rev, moveSpeed,
-                    vex::velocityUnits::pct);
-    backRight.spin(vex::directionType::rev, moveSpeed, vex::velocityUnits::pct);
-  } else {
-    // Stop
-    frontRight.stop(vex::brakeType::brake);
-    backRight.stop(vex::brakeType::brake);
-  }
-
-  // Left side movement
-  if (Controller1.Axis4.value() >= 10 && Controller1.Axis4.value() <= -10){
-    //turn
-    frontRight.spin(vex::directionType::fwd, rightPower,
-                    vex::velocityUnits::pct);
-  } else if (leftPower != 0) {
-    //drive
-    frontLeft.spin(vex::directionType::fwd, leftPower, vex::velocityUnits::pct);
-    backLeft.spin(vex::directionType::fwd, leftPower, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonUp.pressing()) {
-    // Move Up
-    frontLeft.spin(vex::directionType::fwd, moveSpeed, vex::velocityUnits::pct);
-    backLeft.spin(vex::directionType::fwd, moveSpeed, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonDown.pressing()) {
-    // Move Down
-    frontLeft.spin(vex::directionType::rev, moveSpeed, vex::velocityUnits::pct);
-    backLeft.spin(vex::directionType::rev, moveSpeed, vex::velocityUnits::pct);
-  } else {
-    // Stop
-    frontLeft.stop(vex::brakeType::brake);
-    backLeft.stop(vex::brakeType::brake);
-  }
-
-  
-  //gyro stuff
-  if (gyroCounter < 2) {
-    gyroCounter += 1;
-  } else {
-    preGyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
-    gyroCounter = 0;
-  }
-
-  if (Controller1.ButtonLeft.pressing()) {
-    // Strafe left
-    gyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
-
-    if (gyroRotation != preGyroRotation) {
-      frontStrafePower *= gyroRotation;
+    if (arcadeDrive == true) {
+      // Arcade control
+      leftPower = sigmoid_map[Controller1.Axis3.value() + 127] +
+                  sigmoid_map[Controller1.Axis4.value() + 127];
+      rightPower = sigmoid_map[Controller1.Axis3.value() + 127] -
+                   sigmoid_map[Controller1.Axis4.value() + 127];
+    } else {
+      // Tank Control
+      leftPower = sigmoid_map[Controller1.Axis3.value() + 127];
+      rightPower = sigmoid_map[Controller1.Axis2.value() + 127];
     }
 
-    backRight.spin(vex::directionType::fwd, backStrafePower,
-                   vex::velocityUnits::pct);
-    frontRight.spin(vex::directionType::rev, frontStrafePower,
-                    vex::velocityUnits::pct);
-    frontLeft.spin(vex::directionType::fwd, frontStrafePower,
-                   vex::velocityUnits::pct);
-    backLeft.spin(vex::directionType::rev, backStrafePower,
-                  vex::velocityUnits::pct);
-  } else if (Controller1.ButtonRight.pressing()) {
-    // Strafe right
-    gyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
-
-    if (gyroRotation != preGyroRotation) {
-      frontStrafePower *= (gyroRotation/preGyroRotation);
+    // Precision Control
+    if (Controller1.ButtonL1.pressing() && Controller1.ButtonL2.pressing()) {
+      leftPower /= 4;
+      rightPower /= 4;
+      moveSpeed = 10;
+      rampSpeed = 10;
+      grabbySpeed = 5;
+      backStrafePower = 25;
+      frontStrafePower = 25;
+    } else if (Controller1.ButtonL1.pressing()) {
+      leftPower /= 2;
+      rightPower /= 2;
+      moveSpeed = 25;
+      rampSpeed = 25;
+      grabbySpeed = 10;
+      backStrafePower = 50;
+      frontStrafePower = 50;
+    } else {
+      intakeSpeed = 100;
+      moveSpeed = 100;
+      rampSpeed = 50;
+      grabbySpeed = 50;
+      backStrafePower = 100;
+      frontStrafePower = 100;
     }
 
-    backRight.spin(vex::directionType::rev, backStrafePower,
-                   vex::velocityUnits::pct);
-    frontRight.spin(vex::directionType::fwd, frontStrafePower,
+    // prevents overheating
+    if (rightClaw.temperature(percentUnits::pct) >= 75 ||
+        leftClaw.temperature(percentUnits::pct) >= 75) {
+      intakeSpeed = 50;
+    }
+
+    // Right side movement
+    if (Controller1.Axis4.value() >= 10 && Controller1.Axis4.value() <= -10) {
+      // turn
+      frontRight.spin(vex::directionType::fwd, rightPower,
+                      vex::velocityUnits::pct);
+    } else if (rightPower != 0) {
+      // drive
+      frontRight.spin(vex::directionType::fwd, rightPower,
+                      vex::velocityUnits::pct);
+      backRight.spin(vex::directionType::fwd, rightPower,
+                     vex::velocityUnits::pct);
+    } else if (Controller1.ButtonLeft.pressing()) {
+      // Strafe left
+      backRight.spin(vex::directionType::fwd, backStrafePower,
+                     vex::velocityUnits::pct);
+      frontRight.spin(vex::directionType::rev, backStrafePower,
+                      vex::velocityUnits::pct);
+    } else if (Controller1.ButtonRight.pressing()) {
+      // Strafe right
+      backRight.spin(vex::directionType::rev, backStrafePower,
+                     vex::velocityUnits::pct);
+      frontRight.spin(vex::directionType::fwd, backStrafePower,
+                      vex::velocityUnits::pct);
+    } else if (Controller1.ButtonUp.pressing()) {
+      // Move Straight Up
+      frontRight.spin(vex::directionType::fwd, moveSpeed,
+                      vex::velocityUnits::pct);
+      backRight.spin(vex::directionType::fwd, moveSpeed,
+                     vex::velocityUnits::pct);
+    } else if (Controller1.ButtonDown.pressing()) {
+      // Move Straight Down
+      frontRight.spin(vex::directionType::rev, moveSpeed,
+                      vex::velocityUnits::pct);
+      backRight.spin(vex::directionType::rev, moveSpeed,
+                     vex::velocityUnits::pct);
+    } else {
+      // Stop
+      frontRight.stop(vex::brakeType::brake);
+      backRight.stop(vex::brakeType::brake);
+    }
+
+    // Left side movement
+    if (Controller1.Axis4.value() >= 10 && Controller1.Axis4.value() <= -10) {
+      // turn
+      frontRight.spin(vex::directionType::fwd, rightPower,
+                      vex::velocityUnits::pct);
+    } else if (leftPower != 0) {
+      // drive
+      frontLeft.spin(vex::directionType::fwd, leftPower,
+                     vex::velocityUnits::pct);
+      backLeft.spin(vex::directionType::fwd, leftPower,
                     vex::velocityUnits::pct);
-    frontLeft.spin(vex::directionType::rev, frontStrafePower,
-                   vex::velocityUnits::pct);
-    backLeft.spin(vex::directionType::fwd, backStrafePower,
-                  vex::velocityUnits::pct);
+    } else if (Controller1.ButtonUp.pressing()) {
+      // Move Up
+      frontLeft.spin(vex::directionType::fwd, moveSpeed,
+                     vex::velocityUnits::pct);
+      backLeft.spin(vex::directionType::fwd, moveSpeed,
+                    vex::velocityUnits::pct);
+    } else if (Controller1.ButtonDown.pressing()) {
+      // Move Down
+      frontLeft.spin(vex::directionType::rev, moveSpeed,
+                     vex::velocityUnits::pct);
+      backLeft.spin(vex::directionType::rev, moveSpeed,
+                    vex::velocityUnits::pct);
+    } else {
+      // Stop
+      frontLeft.stop(vex::brakeType::brake);
+      backLeft.stop(vex::brakeType::brake);
+    }
+
+    // gyro stuff
+    if (gyroCounter < 2) {
+      gyroCounter += 1;
+    } else {
+      preGyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
+      gyroCounter = 0;
+    }
+
+    if (Controller1.ButtonLeft.pressing()) {
+      // Strafe left
+      gyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
+
+      if (gyroRotation != preGyroRotation) {
+        frontStrafePower *= gyroRotation;
+      }
+
+      backRight.spin(vex::directionType::fwd, backStrafePower,
+                     vex::velocityUnits::pct);
+      frontRight.spin(vex::directionType::rev, frontStrafePower,
+                      vex::velocityUnits::pct);
+      frontLeft.spin(vex::directionType::fwd, frontStrafePower,
+                     vex::velocityUnits::pct);
+      backLeft.spin(vex::directionType::rev, backStrafePower,
+                    vex::velocityUnits::pct);
+    } else if (Controller1.ButtonRight.pressing()) {
+      // Strafe right
+      gyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
+
+      if (gyroRotation != preGyroRotation) {
+        frontStrafePower *= (gyroRotation / preGyroRotation);
+      }
+
+      backRight.spin(vex::directionType::rev, backStrafePower,
+                     vex::velocityUnits::pct);
+      frontRight.spin(vex::directionType::fwd, frontStrafePower,
+                      vex::velocityUnits::pct);
+      frontLeft.spin(vex::directionType::rev, frontStrafePower,
+                     vex::velocityUnits::pct);
+      backLeft.spin(vex::directionType::fwd, backStrafePower,
+                    vex::velocityUnits::pct);
+    }
+
+    // // Do some sick donuts
+    // if (Controller1.ButtonB.pressing()) {
+    //   frontLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+    //   backRight.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+    //   backLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+    // }
   }
-
-  Brain.Screen.clearScreen();
-
-  task::sleep(20);
-  //gyroRotation = gyroSensor.value(analogUnits::range12bit);
-  Brain.Screen.setCursor(3,3);
-  Brain.Screen.print(gyroSensor.value(analogUnits::range12bit));
-
-  // // Do some sick donuts
-  // if (Controller1.ButtonB.pressing()) {
-  //   frontLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-  //   backRight.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-  //   backLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-  // }
 }
 
 // Controls ramp n intake movements for driver control section
 void rampNIntake(void) {
 
-  // Ramp movement
-  if (Controller1.ButtonX.pressing() && ramp.position(degrees) >= 1500) {
-    Controller1.rumble(".");
-    ramp.stop(vex::brakeType::hold);
-    ramp2.stop(vex::brakeType::hold);
-  } else if (Controller1.ButtonA.pressing() && ramp.position(degrees) <= -100) {
-    Controller1.rumble(".");
-    ramp.stop(vex::brakeType::hold);
-    ramp2.stop(vex::brakeType::hold);
-  } else if (Controller1.ButtonX.pressing()) {
-    ramp.spin(vex::directionType::fwd, rampSpeed, vex::velocityUnits::pct);
-    ramp2.spin(vex::directionType::fwd, rampSpeed, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonA.pressing()) {
-    ramp.spin(vex::directionType::rev, rampSpeed, vex::velocityUnits::pct);
-    ramp2.spin(vex::directionType::rev, rampSpeed, vex::velocityUnits::pct);
-  } else {
-    ramp.stop(vex::brakeType::hold);
-    ramp2.stop(vex::brakeType::hold);
-  }
+  if (stacking == false) {
 
-  if (Controller1.ButtonY.pressing()) {
-    grabbyGuy.spin(vex::directionType::fwd, grabbySpeed, vex::velocityUnits::pct);
-  } else if (Controller1.ButtonB.pressing()) {
-    grabbyGuy.spin(vex::directionType::rev, grabbySpeed, vex::velocityUnits::pct);
-  } else {
-    grabbyGuy.stop(vex::brakeType::hold);
-  }
+    // Ramp movement
+    if (Controller1.ButtonX.pressing() && ramp.position(degrees) >= 1500) {
+      Controller1.rumble(".");
+      ramp.stop(vex::brakeType::hold);
+      ramp2.stop(vex::brakeType::hold);
+    } else if (Controller1.ButtonA.pressing() &&
+               ramp.position(degrees) <= -100) {
+      Controller1.rumble(".");
+      ramp.stop(vex::brakeType::hold);
+      ramp2.stop(vex::brakeType::hold);
+    } else if (Controller1.ButtonX.pressing()) {
+      ramp.spin(vex::directionType::fwd, rampSpeed, vex::velocityUnits::pct);
+      ramp2.spin(vex::directionType::fwd, rampSpeed, vex::velocityUnits::pct);
+    } else if (Controller1.ButtonA.pressing()) {
+      ramp.spin(vex::directionType::rev, rampSpeed, vex::velocityUnits::pct);
+      ramp2.spin(vex::directionType::rev, rampSpeed, vex::velocityUnits::pct);
+    } else {
+      ramp.stop(vex::brakeType::hold);
+      ramp2.stop(vex::brakeType::hold);
+    }
 
-  // Claw control
-  if (Controller1.ButtonR2.pressing()) {
-    leftClaw.spin(vex::directionType::fwd, intakeSpeed,
-                  vex::velocityUnits::pct);
-    rightClaw.spin(vex::directionType::fwd, intakeSpeed,
-                   vex::velocityUnits::pct);
-  } else if (Controller1.ButtonR1.pressing()) {
-    leftClaw.spin(vex::directionType::rev, intakeSpeed,
-                  vex::velocityUnits::pct);
-    rightClaw.spin(vex::directionType::rev, intakeSpeed,
-                   vex::velocityUnits::pct);
-  } else {
-    leftClaw.stop(vex::brakeType::hold);
-    rightClaw.stop(vex::brakeType::hold);
-  }
+    if (Controller1.ButtonY.pressing()) {
+      grabbyGuy.spin(vex::directionType::fwd, grabbySpeed,
+                     vex::velocityUnits::pct);
+    } else if (Controller1.ButtonB.pressing()) {
+      grabbyGuy.spin(vex::directionType::rev, grabbySpeed,
+                     vex::velocityUnits::pct);
+    } else {
+      grabbyGuy.stop(vex::brakeType::hold);
+    }
 
-  // Runs stack function
-  // Controller1.ButtonY.pressed(stack);
-  // if (Controller1.ButtonY.pressing() && stacking == false) {
-  //   stacking = true;
-  //   stack();
-  // }
+    // Claw control
+    if (Controller1.ButtonR2.pressing()) {
+      leftClaw.spin(vex::directionType::fwd, intakeSpeed,
+                    vex::velocityUnits::pct);
+      rightClaw.spin(vex::directionType::fwd, intakeSpeed,
+                     vex::velocityUnits::pct);
+    } else if (Controller1.ButtonR1.pressing()) {
+      leftClaw.spin(vex::directionType::rev, intakeSpeed,
+                    vex::velocityUnits::pct);
+      rightClaw.spin(vex::directionType::rev, intakeSpeed,
+                     vex::velocityUnits::pct);
+    } else {
+      leftClaw.stop(vex::brakeType::hold);
+      rightClaw.stop(vex::brakeType::hold);
+    }
+
+  } else {
+
+    // Runs stack function
+    if (Controller1.ButtonY.pressing()) {
+      stacking = true;
+      stack();
+    }
+  }
 }
 
 // fish
@@ -720,6 +613,66 @@ void fish(void) {
   }
 }
 
+//ping
+void pong(void) {
+
+  //draw stuff
+  Brain.Screen.clearScreen();
+
+  Brain.Screen.drawRectangle(20, pingY, 20, 50);
+  Brain.Screen.drawRectangle(450, pongY, 20, 50);
+  Brain.Screen.drawCircle(ballX, ballY, 10);
+
+  //check for collisions
+  if (ballX == 40) {
+    if (ballFacingRightQuestionMark == false && ballY >= (pingY -20) && ballY <= (pingY + 70)) {
+      ballFacingRightQuestionMark = true;
+    } else {
+      gameOver();
+    }
+  } else if (ballX == 450) {
+    if (ballFacingRightQuestionMark == true && ballY >= (pongY -20) && ballY <= (pongY + 70)) {
+      ballFacingRightQuestionMark = false;
+    } else {
+      gameOver();
+    }
+  }
+
+  //move ball left/right
+  if (ballFacingRightQuestionMark == true) {
+    ballX += 2;
+  } else {
+    ballX -= 2;
+  }
+
+  //move ball up/down
+  if (ballGoingUpQuestionMark == true) {
+    ballY -= 2;
+  } else {
+    ballY += 2;
+  }
+
+  if (ballY == 20) {
+    ballGoingUpQuestionMark = false;
+  } else if (ballY == 219) {
+    ballGoingUpQuestionMark = true;
+  }
+
+  if (Controller1.ButtonUp.pressing()) {
+    pingY -= 1;
+  } else if (Controller1.ButtonDown.pressing()) {
+    pingY += 1;
+  }
+
+  
+
+}
+
+void gameOver(void) {
+  pongQuestionMark = "damn it damn it damn it";
+  Brain.Screen.clearScreen();
+}
+
 // Driver Control Section
 void opcontrol(void) {
 
@@ -741,7 +694,7 @@ void opcontrol(void) {
       }
 
       // fish
-      //fish();
+      fish();
 
       // switch to pong time
       if (Controller1.ButtonL1.pressing() && Controller1.ButtonL2.pressing() &&
@@ -754,6 +707,10 @@ void opcontrol(void) {
 
       // pong time baybee
     } else if (pongQuestionMark == "Yes") {
+      //hell yeah pong time baybee
+
+      pong();
+
 
       // boo you loser why are you switching back
       if (Controller1.ButtonL1.pressing() && Controller1.ButtonL2.pressing() &&
