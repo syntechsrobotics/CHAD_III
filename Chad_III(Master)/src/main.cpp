@@ -658,12 +658,13 @@ void pong(void) {
     ballGoingUpQuestionMark = true;
   }
 
-  if (Controller1.ButtonUp.pressing()) {
+  if (Controller1.ButtonUp.pressing() && pingY >= 1) {
     pingY -= 1;
-  } else if (Controller1.ButtonDown.pressing()) {
+  } else if (Controller1.ButtonDown.pressing() && pingY <= 238) {
     pingY += 1;
   }
 
+  pongY = ballY - 25;
   
 
 }
