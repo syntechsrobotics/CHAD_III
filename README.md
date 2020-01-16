@@ -36,7 +36,8 @@ R2: moves intake forwards
 right&y: auto stack
 
 L1&L2&R1&R2: pong
-    Up(pong): moves player up
-    Down(pong): moves player down
+
+Up(pong): moves player up
+Down(pong): moves player down
     
    
