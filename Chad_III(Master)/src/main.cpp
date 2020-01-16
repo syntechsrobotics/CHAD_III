@@ -206,7 +206,7 @@ void auton(void) {
     backRight.rotateFor(-3.7, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, true);
 
     //move forwards and move up ramp
-   leftClaw.rotateFor(-0.9, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    leftClaw.rotateFor(-0.9, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
     rightClaw.rotateFor(-0.9, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
     frontRight.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
     backRight.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
@@ -283,39 +283,30 @@ void auton(void) {
 // Stacks automatically when button y is pressed
 void stack(void) {
 
+  intakeSpeed = 0;
+  leftPower = 0;
+  rightPower = 0;
+  moveSpeed = 0;
+  rampSpeed = 0;
+  grabbySpeed = 0;
+  backStrafePower = 0;
+  frontStrafePower = 0;
+  
+
   // Move ramp forwards
-  ramp.rotateFor(1, vex::rotationUnits::rev, 60, vex::velocityUnits::pct,
+  ramp.rotateFor(1.6, vex::rotationUnits::rev, 50, vex::velocityUnits::pct,
                  false);
-  ramp2.rotateFor(1, vex::rotationUnits::rev, 60, vex::velocityUnits::pct,
-                  true);
-  ramp.rotateFor(0.5, vex::rotationUnits::rev, 25, vex::velocityUnits::pct,
-                 false);
-  ramp2.rotateFor(0.5, vex::rotationUnits::rev, 25, vex::velocityUnits::pct,
-                  true);
 
-  frontRight.rotateFor(0.5, vex::rotationUnits::rev, 50,
-                       vex::velocityUnits::pct, false);
-  backRight.rotateFor(0.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct,
-                      false);
-  frontLeft.rotateFor(0.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct,
-                      false);
-  backLeft.rotateFor(0.5, vex::rotationUnits::rev, 50, vex::velocityUnits::pct,
-                     true);
-
-  vex::task::sleep(500);
+  vex::task::sleep(1500);
 
   // do things
-  leftClaw.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct,
-                     false);
-  rightClaw.rotateFor(-2, vex::rotationUnits::rev, 100, vex::velocityUnits::pct,
-                      false);
-  frontRight.rotateFor(-2, vex::rotationUnits::rev, 80, vex::velocityUnits::pct,
+  frontRight.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
                        false);
-  backRight.rotateFor(-2, vex::rotationUnits::rev, 80, vex::velocityUnits::pct,
+  backRight.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
                       false);
-  frontLeft.rotateFor(-2, vex::rotationUnits::rev, 80, vex::velocityUnits::pct,
+  frontLeft.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
                       false);
-  backLeft.rotateFor(-2, vex::rotationUnits::rev, 80, vex::velocityUnits::pct,
+  backLeft.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
                      true);
 
   vex::task::sleep(500);
@@ -432,10 +423,10 @@ void driveMovement(void) {
 
 
     //strafing
-    if (Controller1.ButtonLeft.pressing()) {
+    if (Controller1.Axis1.value() <= -5) {
       // Strafe left
       
-      frontStrafePower -= sqrt((ramp.position(rotationUnits::deg)-200)/2);
+      frontStrafePower -= sqrt(ramp.position(rotationUnits::deg));
 
       backRight.spin(vex::directionType::fwd, backStrafePower,
                      vex::velocityUnits::pct);
@@ -445,10 +436,10 @@ void driveMovement(void) {
                      vex::velocityUnits::pct);
       backLeft.spin(vex::directionType::rev, backStrafePower,
                     vex::velocityUnits::pct);
-    } else if (Controller1.ButtonRight.pressing()) {
+    } else if (Controller1.Axis1.value() >= 5) {
       // Strafe right
       
-      frontStrafePower -= sqrt((ramp.position(rotationUnits::deg)-200)/2);
+      frontStrafePower -= sqrt(ramp.position(rotationUnits::deg));
 
       backRight.spin(vex::directionType::rev, backStrafePower,
                      vex::velocityUnits::pct);
@@ -460,12 +451,13 @@ void driveMovement(void) {
                     vex::velocityUnits::pct);
     }
 
-    // // Do some sick donuts
-    // if (Controller1.ButtonB.pressing()) {
-    //   frontLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-    //   backRight.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-    //   backLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
-    // }
+    
+    // Do some sick donuts
+    if (Controller1.ButtonB.pressing() && Controller1.ButtonL2.pressing() && Controller1.ButtonLeft.pressing()) {
+      frontLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+      backRight.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+      backLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
+    }
   }
 }
 
@@ -475,12 +467,12 @@ void rampNIntake(void) {
   if (stacking == false) {
 
     // Ramp movement
-    if (Controller1.ButtonX.pressing() && ramp.position(degrees) >= 1500) {
+    if (Controller1.ButtonX.pressing() && ramp.position(degrees) >= 700) {
       Controller1.rumble(".");
       ramp.stop(vex::brakeType::hold);
       ramp2.stop(vex::brakeType::hold);
     } else if (Controller1.ButtonA.pressing() &&
-               ramp.position(degrees) <= -100) {
+               ramp.position(degrees) <= -50) {
       Controller1.rumble(".");
       ramp.stop(vex::brakeType::hold);
       ramp2.stop(vex::brakeType::hold);
@@ -523,7 +515,7 @@ void rampNIntake(void) {
     }
 
     // Runs stack function
-    if (Controller1.ButtonR1.pressing() && Controller1.ButtonR2.pressing()) {
+    if (Controller1.ButtonRight.pressing() && Controller1.ButtonY.pressing()) {
       stacking = true;
       stack();
     }
@@ -672,7 +664,7 @@ void opcontrol(void) {
       }
 
       // fish
-      fish();
+      //fish();
 
       // switch to pong time
       if (Controller1.ButtonL1.pressing() && Controller1.ButtonL2.pressing() &&
