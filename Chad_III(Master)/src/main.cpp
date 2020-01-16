@@ -16,7 +16,6 @@
 // backRight            motor         17
 // backLeft             motor         11
 // ramp                 motor         20
-// ramp2                motor         12
 // rightClaw            motor         18
 // leftClaw             motor         13
 // ---- END VEXCODE CONFIGURED DEVICES ----
@@ -470,21 +469,16 @@ void rampNIntake(void) {
     if (Controller1.ButtonX.pressing() && ramp.position(degrees) >= 700) {
       Controller1.rumble(".");
       ramp.stop(vex::brakeType::hold);
-      ramp2.stop(vex::brakeType::hold);
     } else if (Controller1.ButtonA.pressing() &&
                ramp.position(degrees) <= -50) {
       Controller1.rumble(".");
       ramp.stop(vex::brakeType::hold);
-      ramp2.stop(vex::brakeType::hold);
     } else if (Controller1.ButtonX.pressing()) {
       ramp.spin(vex::directionType::fwd, rampSpeed, vex::velocityUnits::pct);
-      ramp2.spin(vex::directionType::fwd, rampSpeed, vex::velocityUnits::pct);
     } else if (Controller1.ButtonA.pressing()) {
       ramp.spin(vex::directionType::rev, rampSpeed, vex::velocityUnits::pct);
-      ramp2.spin(vex::directionType::rev, rampSpeed, vex::velocityUnits::pct);
     } else {
       ramp.stop(vex::brakeType::hold);
-      ramp2.stop(vex::brakeType::hold);
     }
 
     //grabby guy stuff
