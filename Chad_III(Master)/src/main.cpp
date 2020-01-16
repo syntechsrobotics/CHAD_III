@@ -383,18 +383,6 @@ void driveMovement(void) {
                       vex::velocityUnits::pct);
       backRight.spin(vex::directionType::fwd, rightPower,
                      vex::velocityUnits::pct);
-    } else if (Controller1.ButtonLeft.pressing()) {
-      // Strafe left
-      backRight.spin(vex::directionType::fwd, backStrafePower,
-                     vex::velocityUnits::pct);
-      frontRight.spin(vex::directionType::rev, backStrafePower,
-                      vex::velocityUnits::pct);
-    } else if (Controller1.ButtonRight.pressing()) {
-      // Strafe right
-      backRight.spin(vex::directionType::rev, backStrafePower,
-                     vex::velocityUnits::pct);
-      frontRight.spin(vex::directionType::fwd, backStrafePower,
-                      vex::velocityUnits::pct);
     } else if (Controller1.ButtonUp.pressing()) {
       // Move Straight Up
       frontRight.spin(vex::directionType::fwd, moveSpeed,
@@ -416,7 +404,7 @@ void driveMovement(void) {
     // Left side movement
     if (Controller1.Axis4.value() >= 10 && Controller1.Axis4.value() <= -10) {
       // turn
-      frontRight.spin(vex::directionType::fwd, rightPower,
+      frontLeft.spin(vex::directionType::fwd, leftPower,
                       vex::velocityUnits::pct);
     } else if (leftPower != 0) {
       // drive
@@ -442,21 +430,12 @@ void driveMovement(void) {
       backLeft.stop(vex::brakeType::brake);
     }
 
-    // gyro stuff
-    if (gyroCounter < 2) {
-      gyroCounter += 1;
-    } else {
-      preGyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
-      gyroCounter = 0;
-    }
 
+    //strafing
     if (Controller1.ButtonLeft.pressing()) {
       // Strafe left
-      gyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
-
-      if (gyroRotation != preGyroRotation) {
-        frontStrafePower *= gyroRotation;
-      }
+      
+      frontStrafePower -= sqrt((ramp.position(rotationUnits::deg)-200)/2);
 
       backRight.spin(vex::directionType::fwd, backStrafePower,
                      vex::velocityUnits::pct);
@@ -468,11 +447,8 @@ void driveMovement(void) {
                     vex::velocityUnits::pct);
     } else if (Controller1.ButtonRight.pressing()) {
       // Strafe right
-      gyroRotation = gyroSensor.value(vex::analogUnits::range12bit);
-
-      if (gyroRotation != preGyroRotation) {
-        frontStrafePower *= (gyroRotation / preGyroRotation);
-      }
+      
+      frontStrafePower -= sqrt((ramp.position(rotationUnits::deg)-200)/2);
 
       backRight.spin(vex::directionType::rev, backStrafePower,
                      vex::velocityUnits::pct);
@@ -519,6 +495,7 @@ void rampNIntake(void) {
       ramp2.stop(vex::brakeType::hold);
     }
 
+    //grabby guy stuff
     if (Controller1.ButtonY.pressing()) {
       grabbyGuy.spin(vex::directionType::fwd, grabbySpeed,
                      vex::velocityUnits::pct);
@@ -545,10 +522,8 @@ void rampNIntake(void) {
       rightClaw.stop(vex::brakeType::hold);
     }
 
-  } else {
-
     // Runs stack function
-    if (Controller1.ButtonY.pressing()) {
+    if (Controller1.ButtonR1.pressing() && Controller1.ButtonR2.pressing()) {
       stacking = true;
       stack();
     }
@@ -613,6 +588,13 @@ void fish(void) {
   }
 }
 
+
+//f
+void gameOver(void) {
+  pongQuestionMark = "damn it damn it damn it";
+  Brain.Screen.clearScreen();
+}
+
 //ping
 void pong(void) {
 
@@ -667,11 +649,6 @@ void pong(void) {
   pongY = ballY - 25;
   
 
-}
-
-void gameOver(void) {
-  pongQuestionMark = "damn it damn it damn it";
-  Brain.Screen.clearScreen();
 }
 
 // Driver Control Section
