@@ -31,7 +31,7 @@ vex::competition Competition;
 #pragma region "Definitions"
 
 // auto selection variables
-int autoNumber = 0;
+int autoNumber = 2;
 
 // defining driving speed variables
 int leftPower = 0;
@@ -191,41 +191,47 @@ void auton(void) {
     backLeft.rotateFor(.5, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, true);
 
     ramp.rotateFor(-0.3, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
-    leftClaw.rotateFor(15, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-    rightClaw.rotateFor(15, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-    frontRight.rotateFor(3, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
-    backRight.rotateFor(3, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
-    frontLeft.rotateFor(3, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
-    backLeft.rotateFor(3, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, true);
+    leftClaw.rotateFor(13, vex::rotationUnits::rev, 90, vex::velocityUnits::pct, false);
+    rightClaw.rotateFor(13, vex::rotationUnits::rev, 90, vex::velocityUnits::pct, false);
+    frontRight.rotateFor(3.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backRight.rotateFor(3.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(3.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(3.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, true);
 
     //turn
-    frontLeft.rotateFor(-1.6, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-    backLeft.rotateFor(-1.6, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-    frontRight.rotateFor(-3.7, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-    backRight.rotateFor(-3.7, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, true);
+    frontLeft.rotateFor(-1.6, vex::rotationUnits::rev, 60, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(-1.6, vex::rotationUnits::rev, 60, vex::velocityUnits::pct, false);
+    frontRight.rotateFor(-3.75, vex::rotationUnits::rev, 60, vex::velocityUnits::pct, false);
+    backRight.rotateFor(-3.75, vex::rotationUnits::rev, 60, vex::velocityUnits::pct, true);
 
     //move forwards and move up ramp
-    leftClaw.rotateFor(-0.9, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-    rightClaw.rotateFor(-0.9, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    leftClaw.rotateFor(-0.5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    rightClaw.rotateFor(-0.5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
     frontRight.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
     backRight.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
     frontLeft.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
     backLeft.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, true);
     
-    ramp.rotateFor(1.6, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, true);
-    frontRight.rotateFor(0.1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
-    backRight.rotateFor(0.1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
-    frontLeft.rotateFor(0.1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
-    backLeft.rotateFor(0.1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, true);
+    ramp.rotateFor(1.55, vex::rotationUnits::rev, 45, vex::velocityUnits::pct, true);
+    frontRight.rotateFor(0.15, vex::rotationUnits::rev, 20, vex::velocityUnits::pct, false);
+    backRight.rotateFor(0.15, vex::rotationUnits::rev, 20, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(0.15, vex::rotationUnits::rev, 20, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(0.15, vex::rotationUnits::rev, 20, vex::velocityUnits::pct, true);
    
 
-    //move back
+  
+    leftClaw.rotateFor(-1, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+    rightClaw.rotateFor(-1, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
     frontRight.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
     backRight.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
     frontLeft.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
     backLeft.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, true);
 
-    vex::task::sleep(100);
+    vex::task::sleep(2500);
+  
+
+  
+
   
 
   } else if (autoNumber == 3) {
@@ -239,35 +245,37 @@ void auton(void) {
     backLeft.rotateFor(.5, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, true);
 
     ramp.rotateFor(-0.3, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
-    leftClaw.rotateFor(13, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-    rightClaw.rotateFor(13, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    leftClaw.rotateFor(11, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    rightClaw.rotateFor(11, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
     frontRight.rotateFor(3.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
     backRight.rotateFor(3.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
     frontLeft.rotateFor(3.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
     backLeft.rotateFor(3.5, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, true);
 
     //turn
-    frontRight.rotateFor(-1.6, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-    backRight.rotateFor(-1.6, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-    frontLeft.rotateFor(-3.7, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
-    backLeft.rotateFor(-3.7, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, true);
+    frontRight.rotateFor(-1.6, vex::rotationUnits::rev, 60, vex::velocityUnits::pct, false);
+    backRight.rotateFor(-1.6, vex::rotationUnits::rev, 60, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(-3.9, vex::rotationUnits::rev, 60, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(-3.9, vex::rotationUnits::rev, 60, vex::velocityUnits::pct, true);
 
     //move forwards and move up ramp
-   leftClaw.rotateFor(-0.5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    leftClaw.rotateFor(-0.5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
     rightClaw.rotateFor(-0.5, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
     frontRight.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
     backRight.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
     frontLeft.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
     backLeft.rotateFor(1.85, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, true);
     
-    ramp.rotateFor(1.6, vex::rotationUnits::rev, 40, vex::velocityUnits::pct, true);
-    frontRight.rotateFor(0.25, vex::rotationUnits::rev, 10, vex::velocityUnits::pct, false);
-    backRight.rotateFor(0.25, vex::rotationUnits::rev, 10, vex::velocityUnits::pct, false);
-    frontLeft.rotateFor(0.15, vex::rotationUnits::rev, 20, vex::velocityUnits::pct, false);
-    backLeft.rotateFor(0.15, vex::rotationUnits::rev, 20, vex::velocityUnits::pct, true);
+    ramp.rotateFor(1.6, vex::rotationUnits::rev, 45, vex::velocityUnits::pct, true);
+    frontRight.rotateFor(0.25, vex::rotationUnits::rev, 20, vex::velocityUnits::pct, false);
+    backRight.rotateFor(0.25, vex::rotationUnits::rev, 20, vex::velocityUnits::pct, false);
+    frontLeft.rotateFor(0.25, vex::rotationUnits::rev, 20, vex::velocityUnits::pct, false);
+    backLeft.rotateFor(0.25, vex::rotationUnits::rev, 20, vex::velocityUnits::pct, true);
    
 
     //move back
+    leftClaw.rotateFor(-1, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
+    rightClaw.rotateFor(-1, vex::rotationUnits::rev, 50, vex::velocityUnits::pct, false);
     frontRight.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
     backRight.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
     frontLeft.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct, false);
@@ -293,20 +301,33 @@ void stack(void) {
   
 
   // Move ramp forwards
-  ramp.rotateFor(1.6, vex::rotationUnits::rev, 50, vex::velocityUnits::pct,
+  ramp.rotateFor(1.6, vex::rotationUnits::rev, 40, vex::velocityUnits::pct,
                  false);
 
   vex::task::sleep(1500);
 
   // do things
-  frontRight.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
+  frontRight.rotateFor(0.15, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
                        false);
-  backRight.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
+  backRight.rotateFor(0.15, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
                       false);
-  frontLeft.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
+  frontLeft.rotateFor(0.15, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
                       false);
-  backLeft.rotateFor(-1, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
+  backLeft.rotateFor(0.15, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
                      true);
+  leftClaw.rotateFor(-1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+    rightClaw.rotateFor(-1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  
+  frontRight.rotateFor(-2, vex::rotationUnits::rev, 40, vex::velocityUnits::pct,
+                       false);
+  backRight.rotateFor(-2, vex::rotationUnits::rev, 40, vex::velocityUnits::pct,
+                      false);
+  frontLeft.rotateFor(-2, vex::rotationUnits::rev, 40, vex::velocityUnits::pct,
+                      false);
+  backLeft.rotateFor(-2, vex::rotationUnits::rev, 40, vex::velocityUnits::pct,
+                     true);
+                     
+                     
 
   vex::task::sleep(500);
 
@@ -450,6 +471,14 @@ void driveMovement(void) {
                     vex::velocityUnits::pct);
     }
 
+    Brain.Screen.clearScreen();
+    Brain.Screen.setCursor(1, 1);
+    Brain.Screen.print(frontStrafePower -= sqrt(ramp.position(rotationUnits::deg)));
+    Brain.Screen.setCursor(30, 30);
+    Brain.Screen.print(frontStrafePower);
+    Brain.Screen.setCursor(50, 50);
+    Brain.Screen.print(sqrt(ramp.position(rotationUnits::deg)));
+
     
     // Do some sick donuts
     if (Controller1.ButtonB.pressing() && Controller1.ButtonL2.pressing() && Controller1.ButtonLeft.pressing()) {
@@ -509,7 +538,7 @@ void rampNIntake(void) {
     }
 
     // Runs stack function
-    if (Controller1.ButtonRight.pressing() && Controller1.ButtonY.pressing()) {
+    if (Controller1.ButtonLeft.pressing()) {
       stacking = true;
       stack();
     }
