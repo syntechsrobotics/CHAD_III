@@ -301,22 +301,25 @@ void stack(void) {
   
 
   // Move ramp forwards
-  ramp.rotateFor(1.6, vex::rotationUnits::rev, 40, vex::velocityUnits::pct,
-                 false);
+  ramp.rotateFor(1.55, vex::rotationUnits::rev, 45, vex::velocityUnits::pct,
+                 true);
 
-  vex::task::sleep(1500);
+  vex::task::sleep(200);
 
-  // do things
-  frontRight.rotateFor(0.15, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
+  // drive forwards
+  frontRight.rotateFor(0.15, vex::rotationUnits::rev, 15, vex::velocityUnits::pct,
                        false);
-  backRight.rotateFor(0.15, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
+  backRight.rotateFor(0.15, vex::rotationUnits::rev, 15, vex::velocityUnits::pct,
                       false);
-  frontLeft.rotateFor(0.15, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
+  frontLeft.rotateFor(0.15, vex::rotationUnits::rev, 15, vex::velocityUnits::pct,
                       false);
-  backLeft.rotateFor(0.15, vex::rotationUnits::rev, 30, vex::velocityUnits::pct,
+  backLeft.rotateFor(0.15, vex::rotationUnits::rev, 15, vex::velocityUnits::pct,
                      true);
+
+
+  //go backwards with intake
   leftClaw.rotateFor(-1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
-    rightClaw.rotateFor(-1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
+  rightClaw.rotateFor(-1, vex::rotationUnits::rev, 100, vex::velocityUnits::pct, false);
   
   frontRight.rotateFor(-2, vex::rotationUnits::rev, 40, vex::velocityUnits::pct,
                        false);
@@ -481,7 +484,7 @@ void driveMovement(void) {
 
     
     // Do some sick donuts
-    if (Controller1.ButtonB.pressing() && Controller1.ButtonL2.pressing() && Controller1.ButtonLeft.pressing()) {
+    if (Controller1.ButtonB.pressing() && Controller1.ButtonL2.pressing() && Controller1.ButtonRight.pressing()) {
       frontLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
       backRight.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
       backLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
