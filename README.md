@@ -22,7 +22,7 @@ right stick: strafing
 up: drives straight forwards
 down: drives straight backwards
 
-B&L2&Left: does some sick donutz
+B&L2&rigtjh: does some sick donutz
 
 X: moves ramp forwards
 A: moves ramp backwards
@@ -33,7 +33,7 @@ B: moves the grabby guy down
 R1: moves intake backwards
 R2: moves intake forwards
 
-right&y: auto stack
+left(i think): auto stack
 
 L1&L2&R1&R2: pong
 
