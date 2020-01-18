@@ -48,9 +48,7 @@ int grabbySpeed = 50;
 // defining strafing variables
 int frontStrafePower = 100;
 int backStrafePower = 100;
-int gyroRotation = 0;
-int preGyroRotation = 0;
-int gyroCounter = 0;
+int numberOfCubes = 0;
 
 // Defining fish variables
 int fishX = 50;
@@ -74,13 +72,10 @@ std::string pongQuestionMark = "No";
   Maps from (-100) -> 100 to itself using the function
   ((100 * pow(4, ((abs(x)-50)/12.5)))/(pow(4, ((abs(x)-50)/12.5))+1)))* ((x >
   0) - (x < 0))
-
   Used to ease in/out joystick movement for more precise control.
-
   If the horizontal input is at 25%, it only has 5% of the power, reducing the
   amount that the robot will slowly veer off course from an imperfect control
   stick.
-
 */
 int sigmoid_map[255] = {
     -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100,
@@ -121,12 +116,10 @@ void vexcodeInit(void) {
     lcdButton onePoint(10, 10, 80, 50, "One Point", yellow);
     lcdButton farRed(100, 10, 80, 50, "Far Red", red);
     lcdButton farBlue(190, 10, 80, 50, "Far Blue", blue);
-
   #pragma region "buttons"
     onePoint.draw();
     farRed.draw();
     farBlue.draw();
-
     if (Brain.Screen.pressing()) {
       if (onePoint.pressing()) {
         autoNumber = 1;
@@ -337,6 +330,34 @@ void stack(void) {
   stacking = false;
 }
 
+void count(void) {
+
+  if (CountyGuy.ButtonL1.pressing() && CountyGuy.ButtonL2.pressing() && CountyGuy.ButtonR1.pressing() && CountyGuy.ButtonR2.pressing()) {
+    numberOfCubes = 0;
+  } else if (CountyGuy.ButtonUp.pressing()) {
+    numberOfCubes = 1;
+  } else if (CountyGuy.ButtonRight.pressing()) {
+    numberOfCubes = 2;
+  } else if (CountyGuy.ButtonDown.pressing()) {
+    numberOfCubes = 3;
+  } else if (CountyGuy.ButtonLeft.pressing()) {
+    numberOfCubes = 4;
+  } else if (CountyGuy.ButtonX.pressing()) {
+    numberOfCubes = 5;
+  } else if (CountyGuy.ButtonA.pressing()) {
+    numberOfCubes = 6;
+  } else if (CountyGuy.ButtonB.pressing()) {
+    numberOfCubes = 7;
+  } else if (CountyGuy.ButtonY.pressing()) {
+    numberOfCubes = 8;
+  }
+
+  CountyGuy.Screen.clearScreen();
+  CountyGuy.Screen.setCursor(2, 2);
+  CountyGuy.Screen.print(numberOfCubes);
+
+}
+
 // Controls wheel movements for driver control section
 void driveMovement(void) {
 
@@ -449,7 +470,7 @@ void driveMovement(void) {
     if (Controller1.Axis1.value() <= -5) {
       // Strafe left
       
-      frontStrafePower -= sqrt(ramp.position(rotationUnits::deg));
+      frontStrafePower -= 100;
 
       backRight.spin(vex::directionType::fwd, backStrafePower,
                      vex::velocityUnits::pct);
@@ -462,7 +483,7 @@ void driveMovement(void) {
     } else if (Controller1.Axis1.value() >= 5) {
       // Strafe right
       
-      frontStrafePower -= sqrt(ramp.position(rotationUnits::deg));
+      frontStrafePower -= 100;
 
       backRight.spin(vex::directionType::rev, backStrafePower,
                      vex::velocityUnits::pct);
@@ -525,12 +546,12 @@ void rampNIntake(void) {
     }
 
     // Claw control
-    if (Controller1.ButtonR2.pressing()) {
+    if (Controller1.ButtonR1.pressing()) {
       leftClaw.spin(vex::directionType::fwd, intakeSpeed,
                     vex::velocityUnits::pct);
       rightClaw.spin(vex::directionType::fwd, intakeSpeed,
                      vex::velocityUnits::pct);
-    } else if (Controller1.ButtonR1.pressing()) {
+    } else if (Controller1.ButtonR2.pressing()) {
       leftClaw.spin(vex::directionType::rev, intakeSpeed,
                     vex::velocityUnits::pct);
       rightClaw.spin(vex::directionType::rev, intakeSpeed,
@@ -679,6 +700,7 @@ void opcontrol(void) {
 
       //----------------------------Movement-----------------------------
 
+      count();
       driveMovement();
       rampNIntake();
 
