@@ -360,7 +360,7 @@ void driveMovement(void) {
       rightPower /= 4;
       moveSpeed = 10;
       rampSpeed = 10;
-      grabbySpeed = 5;
+      grabbySpeed = 10;
       backStrafePower = 25;
       frontStrafePower = 25;
     } else if (Controller1.ButtonL1.pressing()) {
@@ -368,7 +368,7 @@ void driveMovement(void) {
       rightPower /= 2;
       moveSpeed = 25;
       rampSpeed = 25;
-      grabbySpeed = 10;
+      grabbySpeed = 20;
       backStrafePower = 50;
       frontStrafePower = 50;
     } else {
@@ -387,12 +387,7 @@ void driveMovement(void) {
     }
 
   // Right side movement
-    if (Controller1.Axis4.value() >= 10 || Controller1.Axis4.value() <= -10) {
-      // turn
-      frontRight.spin(vex::directionType::fwd, rightPower,
-                      vex::velocityUnits::pct);
-      backRight.spin(directionType::fwd, 0, velocityUnits::pct);
-    } else if (rightPower != 0) {
+    if (rightPower != 0) {
       // drive
       rightSideMovement(rightPower);
     } else if (Controller1.ButtonUp.pressing()) {
@@ -409,12 +404,7 @@ void driveMovement(void) {
     }
 
     // Left side movement
-    if (Controller1.Axis4.value() >= 10 || Controller1.Axis4.value() <= -10) {
-      // turn
-      frontLeft.spin(vex::directionType::fwd, leftPower,
-                      vex::velocityUnits::pct);
-      backLeft.spin(directionType::fwd, 0, velocityUnits::pct);
-    } else if (leftPower != 0) {
+    if (leftPower != 0) {
       // drive
       leftSideMovement(leftPower);
     } else if (Controller1.ButtonUp.pressing()) {
@@ -467,7 +457,7 @@ void driveMovement(void) {
     }
   }
 }
-
+  
 // Controls ramp n intake movements for driver control section
 void rampNIntake(void) {
 
@@ -548,6 +538,10 @@ void fish(void) {
   Brain.Screen.drawCircle(80, 10, 50);
   Brain.Screen.drawCircle(138, 9, 39);
   Brain.Screen.drawCircle(189, 3, 63);
+  Brain.Screen.drawCircle(230, 15, 52);
+  Brain.Screen.drawCircle(276, 5, 17);
+  Brain.Screen.drawCircle(298, 6, 36);
+  Brain.Screen.drawCircle(334, 2, 50);
 
   // fish
   Brain.Screen.setPenColor(fishGold);
