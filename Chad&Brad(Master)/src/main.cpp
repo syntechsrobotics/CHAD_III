@@ -345,9 +345,9 @@ void driveMovement(void) {
     if (arcadeDrive == true) {
       // Arcade control
       leftPower = sigmoid_map[Controller1.Axis3.value() + 127] +
-                  sigmoid_map[Controller1.Axis4.value() + 127];
+                  sigmoid_map[Controller1.Axis1.value() + 127];
       rightPower = sigmoid_map[Controller1.Axis3.value() + 127] -
-                   sigmoid_map[Controller1.Axis4.value() + 127];
+                   sigmoid_map[Controller1.Axis1.value() + 127];
     } else {
       // Tank Control
       leftPower = sigmoid_map[Controller1.Axis3.value() + 127];
@@ -360,7 +360,7 @@ void driveMovement(void) {
       rightPower /= 4;
       moveSpeed = 10;
       rampSpeed = 10;
-      grabbySpeed = 10;
+      grabbySpeed = 20;
       backStrafePower = 25;
       frontStrafePower = 25;
     } else if (Controller1.ButtonL1.pressing()) {
@@ -368,7 +368,7 @@ void driveMovement(void) {
       rightPower /= 2;
       moveSpeed = 25;
       rampSpeed = 25;
-      grabbySpeed = 20;
+      grabbySpeed = 30;
       backStrafePower = 50;
       frontStrafePower = 50;
     } else {
@@ -387,7 +387,9 @@ void driveMovement(void) {
     }
 
   // Right side movement
-    if (rightPower != 0) {
+    if (Controller1.Axis1.position() >= 10 || Controller1.Axis1.position() <= 10){
+      rightSideMovement(rightPower/1.5);
+    } else if (rightPower != 0) {
       // drive
       rightSideMovement(rightPower);
     } else if (Controller1.ButtonUp.pressing()) {
@@ -404,7 +406,9 @@ void driveMovement(void) {
     }
 
     // Left side movement
-    if (leftPower != 0) {
+    if (Controller1.Axis1.position() >= 10 || Controller1.Axis1.position() <= 10){
+      leftSideMovement(leftPower/1.5);
+    } else if (leftPower != 0) {
       // drive
       leftSideMovement(leftPower);
     } else if (Controller1.ButtonUp.pressing()) {
@@ -418,37 +422,7 @@ void driveMovement(void) {
       frontLeft.stop(vex::brakeType::brake);
       backLeft.stop(vex::brakeType::brake);
     }
-
-
-    //strafing
-    if (Controller1.Axis1.value() <= -5) {
-      // Strafe left
-      
-      //frontStrafePower = 0;
-
-      backRight.spin(vex::directionType::fwd, backStrafePower,
-                     vex::velocityUnits::pct);
-      frontRight.spin(vex::directionType::rev, frontStrafePower,
-                      vex::velocityUnits::pct);
-      frontLeft.spin(vex::directionType::fwd, frontStrafePower,
-                     vex::velocityUnits::pct);
-      backLeft.spin(vex::directionType::rev, backStrafePower,
-                    vex::velocityUnits::pct);
-    } else if (Controller1.Axis1.value() >= 5) {
-      // Strafe right
-      
-      //frontStrafePower = 0;
-
-      backRight.spin(vex::directionType::rev, backStrafePower,
-                     vex::velocityUnits::pct);
-      frontRight.spin(vex::directionType::fwd, frontStrafePower,
-                      vex::velocityUnits::pct);
-      frontLeft.spin(vex::directionType::rev, frontStrafePower,
-                     vex::velocityUnits::pct);
-      backLeft.spin(vex::directionType::fwd, backStrafePower,
-                    vex::velocityUnits::pct);
-    }
-    
+   
     // Do some sick donuts
     if (Controller1.ButtonB.pressing() && Controller1.ButtonL2.pressing() && Controller1.ButtonRight.pressing()) {
       frontLeft.spin(vex::directionType::fwd, 100, vex::velocityUnits::pct);
