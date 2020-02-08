@@ -17,7 +17,7 @@ L1: slows things down
 L1&L2: slows things down a lot
 
 Left Stick: drive
-right stick: strafing
+right stick: nothing. there is nothing.
 
 up: drives straight forwards
 down: drives straight backwards
@@ -27,13 +27,13 @@ B&L2&Left: does some sick donutz
 X: moves ramp forwards
 A: moves ramp backwards
 
-Y: moves the grabby guy up
-B: moves the grabby guy down
+Y: moves the arm guy up
+B: moves the arm down
 
 R1: moves intake backwards
 R2: moves intake forwards
 
-right&y: auto stack
+left: auto stack
 
 L1&L2&R1&R2: pong
 
