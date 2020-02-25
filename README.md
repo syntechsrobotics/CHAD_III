@@ -39,5 +39,21 @@ L1&L2&R1&R2: pong
 
 Up(pong): moves player up
 Down(pong): moves player down
+
+# portds
+
+brain = brain
+controller1 = controller
+rangefinder1 = A
+rangefinder2 = C
+gyro = E
+frDrive = 16
+flDrive = 15
+brDrive = 17
+blDrive = 12
+ramp = 20
+clawR = 18
+clawL = 13
+armMotor = 19
     
    
