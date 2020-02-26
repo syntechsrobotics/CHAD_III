@@ -5,18 +5,16 @@ extern brain Brain;
 
 // VEXcode devices
 extern controller Controller1;
-extern controller CountyGuy;
 extern sonar rangeSensor1;
 extern sonar rangeSensor2;
 extern gyro gyroSensor;
-extern motor frontRight;
-extern motor frontLeft;
-extern motor backRight;
-extern motor backLeft;
+extern motor frDrive;
+extern motor flDrive;
+extern motor brDrive;
+extern motor blDrive;
 extern motor ramp;
-extern motor rightClaw;
-extern motor leftClaw;
-extern motor ramp2;
+extern motor clawR;
+extern motor clawL;
 extern motor armMotor;
 
 /**

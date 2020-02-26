@@ -14,23 +14,29 @@ thats it
 # COntrols
 
 L1: slows things down
+
 L1&L2: slows things down a lot
 
 Left Stick: drive
+
 right stick: nothing. there is nothing.
 
 up: drives straight forwards
+
 down: drives straight backwards
 
 B&L2&Left: does some sick donutz
 
 X: moves ramp forwards
+
 A: moves ramp backwards
 
 Y: moves the arm guy up
+
 B: moves the arm down
 
 R1: moves intake backwards
+
 R2: moves intake forwards
 
 left: auto stack
@@ -38,6 +44,35 @@ left: auto stack
 L1&L2&R1&R2: pong
 
 Up(pong): moves player up
+
 Down(pong): moves player down
+
+# portds
+
+brain = brain
+
+controller1 = controller
+
+rangefinder1 = A
+
+rangefinder2 = C
+
+gyro = E
+
+frDrive = 16
+
+flDrive = 15
+
+brDrive = 17
+
+blDrive = 12
+
+ramp = 20
+
+clawR = 18
+
+clawL = 13
+
+armMotor = 19
     
    
