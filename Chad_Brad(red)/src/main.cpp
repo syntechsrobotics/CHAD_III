@@ -109,6 +109,7 @@ void vexcodeInit(void) {
 
   gyroSensor.calibrate();
 
+  wait(3000,msec);
 }
 
 /*
@@ -734,7 +735,10 @@ void driveMovement(void) {
 
     Brain.Screen.clearScreen();
     Brain.Screen.setCursor(1, 1);
-    Brain.Screen.print(gyroSensor.value(rotationUnits::deg));
+    Brain.Screen.print(gyroSensor.heading());
+    Brain.Screen.setCursor(20, 20);
+    Brain.Screen.print(gyroSensor.angle());
+    
 
   }
 }
@@ -952,7 +956,7 @@ void opcontrol(void) {
       }
 
       // Adds delay between each run
-      task::sleep(200);
+      task::sleep(50);
 
       // pong time baybee
     } else if (pongQuestionMark == "Yes") {
